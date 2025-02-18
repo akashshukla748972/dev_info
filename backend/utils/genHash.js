@@ -12,5 +12,21 @@ export const genHash = async (password) => {
     return hash;
   } catch (error) {
     console.error("Error while generating hash");
+    return null;
+  }
+};
+
+export const verifyPassword = async (password, hash) => {
+  try {
+    if (!password || !hash) {
+      console.error("Password not found");
+      return null;
+    }
+
+    const verifyHash = await bcrypt.compare(password, hash);
+    return verifyHash;
+  } catch (error) {
+    console.error("Error while verifying hash password");
+    return null;
   }
 };
