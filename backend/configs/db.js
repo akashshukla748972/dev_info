@@ -1,10 +1,10 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
+import global_variable from "./config.js";
 
 const connectToDB = () => {
-  console.log("here", process.env.MONGO_URI);
-  const db = mongoose.connect(process.env.MONGO_URI).then(() => {
+  const db = mongoose.connect(global_variable.mongo_uri).then(() => {
     console.log("database connected!");
   });
 };
 
-module.exports = connectToDB;
+export default connectToDB;
