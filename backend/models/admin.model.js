@@ -17,7 +17,7 @@ const adminSchema = mongoose.Schema(
       default: null,
     },
     password: { type: String, required: true },
-    photo: {
+    avatar: {
       public_id: {
         type: String,
         default: null,
