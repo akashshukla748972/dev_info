@@ -19,19 +19,39 @@ const Contact = () => {
           data-aos="zoom-in-up"
           data-aos-duration="1000"
         >
-          <a href="https://www.google.com" className="items">
+          <a
+            href="https://www.instagram.com/iamakashshukla92/"
+            target="_blank"
+            className="items"
+          >
             <FaInstagram className="icons" />
           </a>
-          <a href="https://www.google.com" className="items">
+          <a
+            href="https://www.facebook.com/profile.php?id=100022302574814"
+            target="_blank"
+            className="items"
+          >
             <CiFacebook className="icons" />
           </a>
-          <a href="https://www.google.com" className="items">
+          <a
+            href="https://www.linkedin.com/in/akash-shukla-962895328/"
+            target="_blank"
+            className="items"
+          >
             <CiLinkedin className="icons" />
           </a>
-          <a href="https://www.google.com" className="items">
+          <a
+            href="https://x.com/AkashShukl56981"
+            target="_blank"
+            className="items"
+          >
             <FaSquareXTwitter className="icons" />
           </a>
-          <a href="https://www.google.com" className="items">
+          <a
+            href="https://github.com/akashshukla748972"
+            target="_blank"
+            className="items"
+          >
             <FaGithubSquare className="icons" />
           </a>
           <a
