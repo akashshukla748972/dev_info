@@ -4,6 +4,7 @@ export const genHash = async (password) => {
   try {
     if (!password) {
       console.error("Password not found");
+      return null;
     }
 
     const salt = await bcrypt.genSalt(10);
