@@ -1,71 +1,58 @@
 import { v2 as cloudinary } from "cloudinary";
-import bcrypt from "bcrypt";
+import bcrypt, { hash } from "bcrypt";
 import adminModel from "../models/admin.model.js";
+import { genHash } from "../utils/genHash.js";
 
-export const create = async (req, res) => {
+export const handleCreateUser = async (req, res) => {
+  console.log(req.body);
   try {
-    if (!req.files || Object.keys(req.files).length === 0) {
-      return res.status(400).json({ error: "Admin Photo is Required" });
-    }
+    const { name, email, password } = req.body;
+    if (!name || !email || !password) {
+      const errorField = [];
+      if (!name) errorField.push("Name");
+      if (!email) errorField.push("Email");
+      if (!password) errorField.push("Password");
 
-    const { photo } = req.files;
-    const allowedFormats = ["image/jpg", "image/png", "image/jpeg"];
-    if (!allowedFormats.includes(photo.mimetype)) {
-      return res
-        .status(400)
-        .json({ error: "User Photo Allowed Type Only jpg, png" });
-    }
-
-    const { name, email, phone, password } = req.body;
-    if (!name || !email || !phone || !password) {
       return res.status(400).json({
-        error: "All Fields Are Required: Name, Email, Phone, Password",
+        message: `${
+          errorField.length > 0 && errorField.join(", ")
+        } is required`,
+        success: false,
+        error: true,
       });
     }
 
     const admin = await adminModel.find();
     if (admin.length !== 0) {
-      return res.status(409).json({ error: "Admin Already Exists" });
+      return res
+        .status(409)
+        .json({ message: "Admin Already Exists", success: false, error: true });
     }
 
-    const cloudinaryResponse = await cloudinary.uploader.upload(
-      photo.tempFilePath
-    );
-    if (!cloudinaryResponse || cloudinaryResponse.error) {
-      return res.status(500).json({ error: "Cloudinary Upload Failed" });
-    }
-
-    const hashPassword = await bcrypt.hash(password, 10);
+    const hashPassword = await genHash(password);
+    console.log(hashPassword);
 
     const newAdmin = new adminModel({
       name,
       email,
-      phone,
       password: hashPassword,
-      photo: {
-        public_id: cloudinaryResponse.public_id,
-        url: cloudinaryResponse.url,
-      },
       is_admin: true,
-      is_active: true,
-      created_at: Date.now(),
     });
 
     await newAdmin.save();
 
+    newAdmin.password = null;
+
     res.status(201).json({
-      data: {
-        name: newAdmin.name,
-        email: newAdmin.email,
-        phone: newAdmin.phone,
-        photo: newAdmin.photo,
-        is_admin: newAdmin.is_admin,
-        is_active: newAdmin.is_active,
-        created_at: newAdmin.created_at,
-      },
+      message: "Admin successfully created",
+      data: newAdmin,
+      success: true,
+      error: false,
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Internal Server Error" });
+    res
+      .status(500)
+      .json({ message: "Internal Server Error", success: true, error: false });
   }
 };

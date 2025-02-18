@@ -1,8 +1,8 @@
-import { create } from "../controllers/admin.controllers.js";
+import { handleCreateUser } from "../controllers/admin.controllers.js";
 import express from "express";
 
 const router = express.Router();
 
-router.post("/create", create);
+router.post("/create", handleCreateUser);
 
 export default router;

@@ -3,44 +3,38 @@ import mongoose from "mongoose";
 const adminSchema = mongoose.Schema({
   name: {
     type: String,
-    require: true,
+    required: true,
   },
   email: {
     type: String,
-    require: true,
+    required: true,
     uniqie: true,
   },
   phone: {
     type: String,
-    require: true,
+    uniqie: true,
+    default: null,
   },
   password: { type: String, require: true },
   photo: {
     public_id: {
       type: String,
-      require: true,
+      default: null,
     },
     url: {
       type: String,
-      require: true,
+      default: null,
     },
   },
   is_admin: {
     type: Boolean,
     require: true,
+    default: true,
   },
   is_active: {
     type: Boolean,
     require: true,
-  },
-  created_at: {
-    type: Date,
-    require: true,
-  },
-  updated_at: {
-    type: Date,
-    require: true,
-    default: Date.now,
+    default: true,
   },
 });
 
