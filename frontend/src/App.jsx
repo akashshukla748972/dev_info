@@ -1,34 +1,13 @@
-import { useEffect, useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
-import Navbar from "./components/Navbar";
-import Home from "./components/Home";
-import Experience from "./components/Experience";
-import Skills from "./components/Skills";
-import Projects from "./components/Projects";
-import Contact from "./components/Contact";
+import React from "react";
+import MainRouting from "./utils/MainRouting";
 import Aos from "aos";
-import "aos/dist/aos.css";
 
-function App() {
-  useEffect(() => {
-    Aos.init();
-  }, []);
-  const [count, setCount] = useState(0);
-
+const App = () => {
   return (
     <>
-      <Navbar />
-      <div className="container">
-        <Home />
-        <Experience />
-        <Skills />
-        <Projects />
-        <Contact />
-      </div>
+      <MainRouting />
     </>
   );
-}
+};
 
 export default App;
