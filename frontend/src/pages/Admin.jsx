@@ -5,11 +5,19 @@ import Sidebar from "../components/admin/Sidebar";
 
 const Admin = () => {
   return (
-    <div>
-      <Navbar />
-      <Sidebar />
-      <AdminRouting />
-    </div>
+    <main className="flex">
+      <div className="">
+        <Sidebar />
+      </div>
+      <div className="">
+        <div className="">
+          <Navbar />
+        </div>
+        <div className="">
+          <AdminRouting />
+        </div>
+      </div>
+    </main>
   );
 };
 
