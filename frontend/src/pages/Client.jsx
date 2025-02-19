@@ -8,6 +8,7 @@ import Projects from "../components/client/Projects";
 import Contact from "../components/client/Contact";
 
 function Client() {
+  document.title = "Portfolio | Client";
   useEffect(() => {
     Aos.init();
   }, []);

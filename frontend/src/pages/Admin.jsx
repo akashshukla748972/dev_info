@@ -4,6 +4,7 @@ import Navbar from "../components/admin/Navbar";
 import Sidebar from "../components/admin/Sidebar";
 
 const Admin = () => {
+  document.title = "Dashboard | Admin";
   return (
     <main className="w-full h-screen flex">
       <div className="w-[20%] border-r-[0.5px] p-6">
