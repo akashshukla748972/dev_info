@@ -5,11 +5,11 @@ import Sidebar from "../components/admin/Sidebar";
 
 const Admin = () => {
   return (
-    <main className="flex">
-      <div className="">
+    <main className="w-full h-screen flex">
+      <div className="w-[20%] border-r-[0.5px] p-6">
         <Sidebar />
       </div>
-      <div className="">
+      <div className="w-[80%] border-r-[0.5px] p-6">
         <div className="">
           <Navbar />
         </div>
