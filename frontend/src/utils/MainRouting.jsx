@@ -5,13 +5,11 @@ import Admin from "../pages/Admin";
 
 const MainRouting = () => {
   return (
-    <>
-      <Routes>
-        <Route path="/" element={<Client />} />
-        <Route path="/admin/*" element={<Admin />} />
-        <Route path="/*" element={<Client />} />
-      </Routes>
-    </>
+    <Routes>
+      <Route index element={<Client />} />
+      <Route path="/admin/*" element={<Admin />} />
+      <Route path="*" element={<Client />} />
+    </Routes>
   );
 };
 

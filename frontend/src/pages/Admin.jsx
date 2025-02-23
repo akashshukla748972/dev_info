@@ -1,24 +1,19 @@
 import React from "react";
 import AdminRouting from "../utils/AdminRouting";
-import Navbar from "../components/admin/Navbar";
-import Sidebar from "../components/admin/Sidebar";
+import Sidebar from "../components/admin/Sidenav";
+import Sidenav from "../components/admin/Sidenav";
 
 const Admin = () => {
   document.title = "Dashboard | Admin";
   return (
-    <main className="w-full h-screen flex">
-      <div className="w-[20%] border-r-[0.5px] p-6">
-        <Sidebar />
+    <div className="flex h-screen bg-gray-900  text-gray-100 overflow-hidden">
+      <div className="flex inset-0 z-0">
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-800 via-gray-800 to-gray-900 opacity-80" />
+        <div className="absolute inset-0 backdrop-blur-sm" />
       </div>
-      <div className="w-[80%] border-r-[0.5px] p-6">
-        <div className="">
-          <Navbar />
-        </div>
-        <div className="">
-          <AdminRouting />
-        </div>
-      </div>
-    </main>
+      <Sidenav />
+      <AdminRouting />
+    </div>
   );
 };
 

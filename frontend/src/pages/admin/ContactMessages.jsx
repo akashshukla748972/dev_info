@@ -1,9 +1,10 @@
 import React from "react";
+import Header from "../../components/admin/common/Header";
 
 const ContactMessages = () => {
   return (
-    <div>
-      <h1>Contact page</h1>
+    <div className="flex-1 z-10">
+      <Header title={"Contact's"} />
     </div>
   );
 };

@@ -1,9 +1,10 @@
 import React from "react";
+import Header from "../../components/admin/common/Header";
 
 const Settings = () => {
   return (
-    <div>
-      <h1>Setting's page</h1>
+    <div className="flex-1 z-10">
+      <Header title={"Setting"} />
     </div>
   );
 };
