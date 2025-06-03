@@ -15,7 +15,7 @@ function Client() {
   return (
     <>
       <Navbar />
-      <div className="container">
+      <div className="container flex flex-col justify-center items-center">
         <Home />
         {/* <Experience /> */}
         <Skills />
