@@ -12,7 +12,7 @@ export const getToken = async (payLoad) => {
     });
     return token;
   } catch (error) {
-    console.error("Error generating token:", error);
+    console.error("Error while generating token:", error);
     return null;
   }
 };
