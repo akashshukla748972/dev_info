@@ -31,6 +31,17 @@ const App = () => {
           }
         >
           <Route path="dashboard" element={<AdminView />} />
+          <Route path="about" element={<AdminView />} />
+          <Route path="skills" element={<AdminView />} />
+          <Route path="projects" element={<AdminView />} />
+          <Route path="experiences" element={<AdminView />} />
+          <Route path="educations" element={<AdminView />} />
+          <Route path="services" element={<AdminView />} />
+          <Route path="testimonials" element={<AdminView />} />
+          <Route path="blogs" element={<AdminView />} />
+          <Route path="messages" element={<AdminView />} />
+          <Route path="settings" element={<AdminView />} />
+          <Route path="logout" element={<AdminView />} />
         </Route>
       </Routes>
     </div>
