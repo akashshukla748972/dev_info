@@ -3,9 +3,9 @@ import global_variable from "./config.js";
 
 const connectToCloudinary = () => {
   cloudinary.config({
-    cloud_name: process.env.CLOUD_NAME,
-    api_key: process.env.CLOUD_API_KEY,
-    api_secret: process.env.CLOUD_SECRET_KEY,
+    cloud_name: global_variable.cloud_name,
+    api_key: global_variable.cloud_api_key,
+    api_secret: global_variable.cloud_api_secret,
   });
 };
 

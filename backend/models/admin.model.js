@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
+import {Schema, model} from "mongoose";
 
-const adminSchema = mongoose.Schema(
+const adminSchema = new Schema(
   {
     name: {
       type: String,
@@ -27,8 +27,9 @@ const adminSchema = mongoose.Schema(
         default: null,
       },
     },
-    is_admin: {
-      type: Boolean,
+    role: {
+      type: String,
+      enum: ["admin", "super_admin"],
       default: true,
     },
     is_active: {
@@ -41,5 +42,5 @@ const adminSchema = mongoose.Schema(
   }
 );
 
-const adminModel = mongoose.model("admin", adminSchema);
+const adminModel = model("admin", adminSchema);
 export default adminModel;
