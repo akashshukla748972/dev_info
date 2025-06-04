@@ -26,7 +26,7 @@ const AdminHeader = () => {
     }
   };
   return (
-    <div className="flex bg-muted p-4 border-b border-gray-700">
+    <div className="flex bg-muted p-4 bg-gray-800 border-b border-gray-700">
       <div className="flex flex-1 justify-between">
         <div className="flex flex-col relative">
           <form onSubmit={handleSubmit(onSearch)} className="">
