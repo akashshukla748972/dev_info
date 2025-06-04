@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Menu } from "lucide-react";
 
 import { sidebarItem } from "../../configs/admin/";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const Sidebar = ({ openSidebar, setOpenSidebar }) => {
   return (
@@ -25,8 +25,18 @@ const Sidebar = ({ openSidebar, setOpenSidebar }) => {
         {/* nav item */}
         <nav className="mt-8">
           {sidebarItem.map((item) => (
-            <Link key={item.href} to={item.href}>
-              <motion.div className="flex items-center p-4 text-sm font-medium rounded-lg hover:bg-gray-700 transition-colors mb-2">
+            <NavLink
+              className={({ isActive }) =>
+                `block rounded-lg mb-2 transition-colors ${
+                  isActive
+                    ? "bg-gray-700 text-white"
+                    : "hover:bg-gray-700 text-gray-300"
+                }`
+              }
+              key={item.href}
+              to={item.href}
+            >
+              <motion.div className="flex items-center p-4 text-sm font-medium">
                 <item.icon
                   size={20}
                   style={{ color: item.color, minWidth: "20px" }}
@@ -46,7 +56,7 @@ const Sidebar = ({ openSidebar, setOpenSidebar }) => {
                   )}
                 </AnimatePresence>
               </motion.div>
-            </Link>
+            </NavLink>
           ))}
         </nav>
       </div>

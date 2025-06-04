@@ -3,8 +3,6 @@ import { useLocation, Navigate } from "react-router-dom";
 
 const CheckAuth = ({ role, children }) => {
   const location = useLocation();
-  console.log("Location->", location.pathname);
-  console.log("Role->", role);
 
   if (location.pathname == "/") {
     if (role == "admin") {
