@@ -1,12 +1,13 @@
-import { v2 as cloudinary } from "cloudinary";
 import adminModel from "../../models/admin.model.js";
 import CustomError from "../../utils/CustomError.js";
+import { uploadAvatarInCloudinary } from "../../utils/common/uploadAvatar.js";
 
 export const handleUpdateProfilePhoto = async (req, res, next) => {
   try {
     const { id } = req.params;
+    const file = req?.files?.avatar;
 
-    if (req?.files?.avatar) {
+    if (file) {
       const { avatar } = req.files;
       console.log("Avatar:", avatar);
       const allowedFormats = ["image/jpg", "image/png", "image/jpeg"];
@@ -18,27 +19,25 @@ export const handleUpdateProfilePhoto = async (req, res, next) => {
       }
     }
 
-    let cloudinaryResponse = null;
-    if (req.files?.avatar) {
-      cloudinaryResponse = await cloudinary.uploader.upload(
-        req.files.avatar.tempFilePath,
-        {
-          folder: "admin/ profile",
-        }
-      );
-      if (!cloudinaryResponse || cloudinaryResponse.error) {
-        console.error("Cloudinary Error:", cloudinaryResponse.error);
-        return next(new CustomError("Failed to upload image, Try again.", 500));
-      }
+    const cloudinaryResponse = await uploadAvatarInCloudinary(
+      file,
+      "admin/ profile"
+    );
+
+    console.log(cloudinaryResponse);
+    if (cloudinaryResponse.isError) {
+      return next(new CustomError(cloudinaryResponse.message, 500));
     }
+
+    const { response } = cloudinaryResponse;
 
     const updateOnDatabase = await adminModel
       .findByIdAndUpdate(
         id,
         {
           avatar: {
-            public_id: cloudinaryResponse.public_id,
-            url: cloudinaryResponse.url,
+            public_id: response.public_id,
+            url: response.url,
           },
         },
         { new: true }
