@@ -1,0 +1,88 @@
+import {
+  BarChart2,
+  User,
+  Layers,
+  Briefcase,
+  GraduationCap,
+  Settings,
+  MessageCircle,
+  FileText,
+  LogOut,
+  Star,
+  Wrench,
+  Globe,
+} from "lucide-react";
+export const sidebarItem = [
+  {
+    name: "Overview",
+    icon: BarChart2,
+    color: "#6366f1",
+    href: "/",
+  },
+  {
+    name: "About Me",
+    icon: User,
+    color: "#10b981",
+    href: "/about",
+  },
+  {
+    name: "Skills",
+    icon: Wrench,
+    color: "#f59e0b",
+    href: "/skills",
+  },
+  {
+    name: "Projects",
+    icon: Layers,
+    color: "#3b82f6",
+    href: "/projects",
+  },
+  {
+    name: "Experience",
+    icon: Briefcase,
+    color: "#8b5cf6",
+    href: "/experience",
+  },
+  {
+    name: "Education",
+    icon: GraduationCap,
+    color: "#ec4899",
+    href: "/education",
+  },
+  {
+    name: "Services",
+    icon: Globe,
+    color: "#06b6d4",
+    href: "/services",
+  },
+  {
+    name: "Testimonials",
+    icon: Star,
+    color: "#facc15",
+    href: "/testimonials",
+  },
+  {
+    name: "Blog",
+    icon: FileText,
+    color: "#14b8a6",
+    href: "/blog",
+  },
+  {
+    name: "Messages",
+    icon: MessageCircle,
+    color: "#f97316",
+    href: "/messages",
+  },
+  {
+    name: "Settings",
+    icon: Settings,
+    color: "#64748b",
+    href: "/settings",
+  },
+  {
+    name: "Logout",
+    icon: LogOut,
+    color: "#ef4444",
+    href: "/logout",
+  },
+];
