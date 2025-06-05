@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import ClientView from "./pages/client_view";
 import AdminView from "./pages/admin_view";
@@ -18,9 +18,18 @@ import Setting from "./pages/admin_view/setting";
 import Logout from "./pages/admin_view/logout";
 import ProjectLayout from "./components/admin_view/project/project_layout";
 import CreateProject from "./pages/admin_view/projects/create_project";
+import { useSelector, useDispatch } from "react-redux";
+import { registerUser } from "./store/auth_slice/authSlice";
 
 const App = () => {
   const role = "admin";
+  const state = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  console.log("State->", state);
+  useEffect(() => {
+    const response = dispatch(registerUser());
+    console.log("Response->", response);
+  }, []);
   return (
     <div className="flex flex-col overflow-hidden bg-white">
       <Routes>
