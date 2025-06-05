@@ -7,7 +7,7 @@ import ClientLayout from "./components/client_view/client_layout";
 import AdminLayout from "./components/admin_view/admin_layout";
 import About from "./pages/admin_view/about";
 import Skills from "./pages/admin_view/skill";
-import Projects from "./pages/admin_view/projects";
+import Projects from "./pages/admin_view/projects/projects";
 import Experience from "./pages/admin_view/experience";
 import Education from "./pages/admin_view/education";
 import Service from "./pages/admin_view/service";
@@ -16,6 +16,8 @@ import Blog from "./pages/admin_view/blog";
 import Message from "./pages/admin_view/message";
 import Setting from "./pages/admin_view/setting";
 import Logout from "./pages/admin_view/logout";
+import ProjectLayout from "./components/admin_view/project/project_layout";
+import CreateProject from "./pages/admin_view/projects/create_project";
 
 const App = () => {
   const role = "admin";
@@ -44,7 +46,10 @@ const App = () => {
           <Route path="dashboard" element={<AdminView />} />
           <Route path="about" element={<About />} />
           <Route path="skills" element={<Skills />} />
-          <Route path="projects" element={<Projects />} />
+          <Route path="projects" element={<ProjectLayout />}>
+            <Route index element={<Projects />} />
+            <Route path="create" element={<CreateProject />} />
+          </Route>
           <Route path="experiences" element={<Experience />} />
           <Route path="educations" element={<Education />} />
           <Route path="services" element={<Service />} />

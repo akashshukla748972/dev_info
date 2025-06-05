@@ -7,7 +7,7 @@ const PageHeading = ({ pageTitle, routes }) => {
     <div className="flex justify-between">
       <h2 className="text-2xl font-semibold">{pageTitle}</h2>
       <p className="flex items-center space-x-2">
-        <Link to="/admin/dashboard">
+        <Link to="/admin/dashboard" className="flex items-center">
           <Home size={16} />
         </Link>
         <Link>{routes}</Link>
