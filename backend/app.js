@@ -1,5 +1,7 @@
 import express from "express";
 import fileUpload from "express-fileupload";
+import cors from "cors";
+import morgan from "morgan";
 
 import connectToCloudinary from "./configs/cloudinary_config.js";
 import errorHandler from "./middlewares/common/errorHandler.middleware.js";
@@ -10,8 +12,16 @@ import CustomError from "./utils/CustomError.js";
 const app = express();
 
 connectToCloudinary();
+
+app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
 app.use(
   fileUpload({
     useTempFiles: true,
