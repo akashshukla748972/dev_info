@@ -33,6 +33,10 @@ const projectSchema = new Schema(
     duration: {
       type: String,
     },
+    project_size: {
+      type: String,
+      enum: ["Small", "Medium", "Big"]
+    },
     difficulty_level: {
       type: String,
       enum: ["Beginner", "Intermediate", "Advanced"],
