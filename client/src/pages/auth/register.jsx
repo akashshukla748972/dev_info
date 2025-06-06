@@ -1,16 +1,33 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { checkAuth, registerUser } from "../../store/auth_slice/authSlice";
+import toast from "react-hot-toast";
 
 const Register = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
-  } = useForm();
+    formState: { errors, isValid },
+  } = useForm({
+    mode: "onChange",
+  });
+
+  const dispatch = useDispatch();
 
   const handleRegisterUser = (data) => {
-    console.log(data);
+    dispatch(registerUser(data)).then((data) => {
+      if (data.error) {
+        toast.error(data.payload);
+      } else {
+        console.log(data);
+        toast.success(
+          data.payload?.message || "New user register successfully."
+        );
+        dispatch(checkAuth());
+      }
+    });
   };
   return (
     <main className="p-6 shadow shadow-gray-500 w-1/3 rounded-xl">
@@ -48,7 +65,7 @@ const Register = () => {
           <label htmlFor="">Password</label>
           <input
             {...register("password", { required: "Password is required." })}
-            type="text"
+            type="password"
             className={`p-2 outline-none border rounded ${
               errors.password ? "border-red-500" : "border-gray-500"
             }`}
@@ -58,8 +75,11 @@ const Register = () => {
 
         <div className="flex flex-col space-y-1">
           <button
-            className="bg-gray-500 w-full p-2 font-semibold rounded"
+            className={`${
+              !isValid ? "bg-gray-700 text-gray-500" : "bg-gray-500"
+            } w-full p-2 font-semibold rounded`}
             type="submit"
+            disabled={!isValid}
           >
             Register Now
           </button>

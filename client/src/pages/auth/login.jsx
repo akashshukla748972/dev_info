@@ -1,17 +1,30 @@
 import { User } from "lucide-react";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { checkAuth, loginUser } from "../../store/auth_slice/authSlice";
+import toast from "react-hot-toast";
 
 const Login = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
-  } = useForm();
-
+    formState: { errors, isValid },
+  } = useForm({
+    mode: "onChange",
+  });
+  const dispatch = useDispatch();
   const handleLoginUser = (data) => {
-    console.log(data);
+    dispatch(loginUser(data)).then((data) => {
+      if (data.error) {
+        toast.error(data.payload);
+      } else {
+        console.log(data);
+        toast.success(data.payload?.message || "User login successfully.");
+        dispatch(checkAuth());
+      }
+    });
   };
   return (
     <main className="p-6 shadow shadow-gray-500 w-1/3 rounded-xl">
@@ -38,7 +51,7 @@ const Login = () => {
           <label htmlFor="">Password</label>
           <input
             {...register("password", { required: "Password is required." })}
-            type="text"
+            type="password"
             className={`p-2 outline-none border rounded ${
               errors.password ? "border-red-500" : "border-gray-500"
             }`}
@@ -48,8 +61,11 @@ const Login = () => {
 
         <div className="flex flex-col space-y-1">
           <button
-            className="bg-gray-500 w-full p-2 font-semibold rounded"
+            className={`${
+              !isValid ? "bg-gray-700 text-gray-500" : "bg-gray-500"
+            } w-full p-2 font-semibold rounded`}
             type="submit"
+            disabled={!isValid}
           >
             Log In
           </button>
