@@ -50,7 +50,11 @@ export const handleCreateUser = async (req, res, next) => {
     };
     const token = await getToken(payLoad);
 
-    res.cookie("token", token);
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+    });
 
     res.status(201).json({
       message: "New user successfully created.",
@@ -101,7 +105,11 @@ export const handleLoginUser = async (req, res, next) => {
     };
     const token = await getToken(payLoad);
 
-    res.cookie("token", token);
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+    });
 
     return res.status(200).json({
       message: "User logged in successfully",
@@ -124,6 +132,25 @@ export const handleCheckAuth = async (req, res, next) => {
       isSuccess: true,
       isError: false,
       data: userData,
+    });
+  } catch (error) {
+    console.error(`Error while varifing user, Try again`);
+    return next(new CustomError("Internal server error", 500));
+  }
+};
+
+export const handleLogoutUser = async (req, res, next) => {
+  try {
+    res.clearCookie("token", {
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+    });
+
+    res.status(200).json({
+      message: "User logged out successfully.",
+      isSuccess: true,
+      isError: false,
     });
   } catch (error) {
     console.error(`Error while varifing user, Try again`);
