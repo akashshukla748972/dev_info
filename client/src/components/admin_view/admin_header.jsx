@@ -1,6 +1,7 @@
 import { ChevronDown, Search } from "lucide-react";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const AdminHeader = () => {
@@ -25,6 +26,8 @@ const AdminHeader = () => {
       setSearchCard(false);
     }
   };
+
+  const { user } = useSelector((state) => state.auth);
   return (
     <div className="flex bg-muted p-4 bg-gray-800 border-b border-gray-700">
       <div className="flex flex-1 justify-between">
@@ -54,13 +57,16 @@ const AdminHeader = () => {
         <div className=" flex space-x-3">
           <div className="">
             <img
-              src="https://i.pinimg.com/736x/b8/91/d5/b891d5eda3bfec2997828f410288c4b9.jpg"
+              src={
+                user.avatar.url ||
+                "https://i.pinimg.com/736x/b8/91/d5/b891d5eda3bfec2997828f410288c4b9.jpg"
+              }
               alt="user_logo"
               className="w-10 h-10 rounded-full"
             />
           </div>
           <div className="flex items-center space-x-2">
-            <p className="">Akash Shukla</p>
+            <p className="">{user.name}</p>
             <ChevronDown className="opacity-50" />
           </div>
         </div>

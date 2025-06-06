@@ -11,8 +11,10 @@ import {
   Twitter,
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const About = () => {
+  const { user } = useSelector((state) => state.auth);
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -39,11 +41,11 @@ const About = () => {
               alt=""
               className="w-32 h-32 rounded-full"
             />
-            <span className="absolute right-0 top-20 w-10 h-10 rounded-full bg-gray-100 flex justify-center items-center">
+            <span className="absolute right-12 top-20 w-10 h-10 rounded-full bg-gray-100 flex justify-center items-center">
               <Edit className="text-gray-800" />
             </span>
             <div className="text-center space-y-2">
-              <h2 className="text-xl font-semibold">Akash Shukla</h2>
+              <h2 className="text-xl font-semibold">{user.name}</h2>
               <p className="">Designer</p>
             </div>
           </div>
@@ -56,7 +58,7 @@ const About = () => {
                 <Mail />
                 <span className="">Email</span>
               </div>
-              <div className="">example@gmail.com</div>
+              <div className="">{user.email}</div>
             </div>
             <div className="">
               <div className="flex">
