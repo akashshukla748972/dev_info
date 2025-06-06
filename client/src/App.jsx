@@ -19,7 +19,7 @@ import Logout from "./pages/admin_view/logout";
 import ProjectLayout from "./components/admin_view/project/project_layout";
 import CreateProject from "./pages/admin_view/projects/create_project";
 import { useSelector, useDispatch } from "react-redux";
-import { registerUser } from "./store/auth_slice/authSlice";
+import { loginUser, registerUser } from "./store/auth_slice/authSlice";
 import toast, { Toaster } from "react-hot-toast";
 import AuthLayout from "./components/auth/auth_layout";
 import Login from "./pages/auth/Login";
@@ -29,14 +29,14 @@ const App = () => {
   const role = "admin";
   const isAuthenticated = true;
   const state = useSelector((state) => state.auth);
+  console.log(state);
   const dispatch = useDispatch();
   useEffect(() => {
     const formData = {
-      name: "Ayush Shukla",
-      email: "ayush256@gmail.com",
-      password: "Ayush@123",
+      email: "shuklaakash748972@gmail.com",
+      password: "Akash@123",
     };
-    const response = dispatch(registerUser(formData)).then((data) =>
+    const response = dispatch(loginUser()).then((data) =>
       data?.error?.message
         ? toast.error(data.payload)
         : toast.success(data.payload.message)
