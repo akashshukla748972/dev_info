@@ -28,6 +28,7 @@ import toast, { Toaster } from "react-hot-toast";
 import AuthLayout from "./components/auth/auth_layout";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/register";
+import Loader from "./pages/common_view/loader";
 
 const App = () => {
   const state = useSelector((state) => state.auth);
@@ -44,7 +45,9 @@ const App = () => {
     handleGetLogedInUserData();
   }, []);
 
-  
+  if (state.isLoading) {
+    return <Loader />;
+  }
   return (
     <div className="flex flex-col overflow-hidden bg-white">
       <Routes>
