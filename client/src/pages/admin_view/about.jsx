@@ -15,6 +15,10 @@ import { useSelector } from "react-redux";
 
 const About = () => {
   const { user } = useSelector((state) => state.auth);
+  console.log(user);
+  const handleEditProfilePhoto = () => {
+    console.log("hello");
+  };
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -37,12 +41,18 @@ const About = () => {
           {/* profile */}
           <div className="absolute -bottom-22 left-[50%] -translate-x-[50%] space-y-2">
             <img
-              src="https://img.freepik.com/free-photo/fun-3d-cartoon-teenage-boy_183364-81073.jpg?ga=GA1.1.153015461.1743153162&semt=ais_items_boosted&w=740"
+              src={
+                user.avatar?.url ||
+                "https://img.freepik.com/free-photo/fun-3d-cartoon-teenage-boy_183364-81073.jpg?ga=GA1.1.153015461.1743153162&semt=ais_items_boosted&w=740"
+              }
               alt=""
               className="w-32 h-32 rounded-full"
             />
             <span className="absolute right-12 top-20 w-10 h-10 rounded-full bg-gray-100 flex justify-center items-center">
-              <Edit className="text-gray-800" />
+              <Edit
+                onClick={handleEditProfilePhoto}
+                className="text-gray-800 cursor-pointer"
+              />
             </span>
             <div className="text-center space-y-2">
               <h2 className="text-xl font-semibold">{user.name}</h2>
