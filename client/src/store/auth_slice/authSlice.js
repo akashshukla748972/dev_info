@@ -37,9 +37,8 @@ export const checkAuth = createAsyncThunk(
       const response = await Axios.get("/auth/check-auth");
       return response.data;
     } catch (error) {
-      console.log(error);
+      console.error(error);
       const message = error.response?.data?.message || error.message;
-      console.error(message);
       return rejectWithValue(message);
     }
   }
@@ -109,7 +108,6 @@ export const authSlice = createSlice({
           (state.isError = null),
           (state.isAuthenticated = true);
         state.user = action.payload.data;
-        console.log(action.payload.data);
       })
       .addCase(checkAuth.rejected, (state, action) => {
         state.isLoading = false;

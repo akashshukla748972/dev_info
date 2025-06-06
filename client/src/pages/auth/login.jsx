@@ -20,7 +20,6 @@ const Login = () => {
       if (data.error) {
         toast.error(data.payload);
       } else {
-        console.log(data);
         toast.success(data.payload?.message || "User login successfully.");
         dispatch(checkAuth());
       }

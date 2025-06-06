@@ -36,7 +36,6 @@ const App = () => {
   const role = user?.role.includes("admin") ? "admin" : "user";
   const isAuthenticated = state?.isAuthenticated;
   const dispatch = useDispatch();
-  console.log(state);
 
   const handleGetLogedInUserData = () => {
     dispatch(checkAuth());

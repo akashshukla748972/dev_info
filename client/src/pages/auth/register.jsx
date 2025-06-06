@@ -21,7 +21,6 @@ const Register = () => {
       if (data.error) {
         toast.error(data.payload);
       } else {
-        console.log(data);
         toast.success(
           data.payload?.message || "New user register successfully."
         );
