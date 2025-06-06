@@ -118,13 +118,12 @@ export const handleLoginUser = async (req, res, next) => {
 export const handleCheckAuth = async (req, res, next) => {
   try {
     const user = req?.user;
-    console.log(user);
     const userData = await adminModel.findById(user.id).select("-password");
     return res.status(200).json({
       message: "Authrized user.",
       isSuccess: true,
       isError: false,
-      data: userData
+      data: userData,
     });
   } catch (error) {
     console.error(`Error while varifing user, Try again`);
