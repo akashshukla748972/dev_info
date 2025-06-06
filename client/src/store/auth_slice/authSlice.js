@@ -45,6 +45,21 @@ export const checkAuth = createAsyncThunk(
   }
 );
 
+export const logoutUser = createAsyncThunk(
+  "/auth/logoutUser",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await Axios.get("/auth/logout");
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      const message = error.response?.data?.message || error.message;
+      console.error(message);
+      return rejectWithValue(message);
+    }
+  }
+);
+
 const initialState = {
   isAuthenticated: false,
   user: null,
@@ -101,6 +116,19 @@ export const authSlice = createSlice({
         state.isError = action.payload;
         state.isAuthenticated = false;
         state.user = null;
+      })
+      .addCase(logoutUser.pending, (state) => {
+        (state.isLoading = true), (state.isError = null);
+      })
+      .addCase(logoutUser.fulfilled, (state, action) => {
+        (state.isLoading = false),
+          (state.isError = null),
+          (state.isAuthenticated = false);
+        state.user = null;
+      })
+      .addCase(logoutUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = action.payload;
       });
   },
 });
