@@ -30,6 +30,21 @@ export const loginUser = createAsyncThunk(
   }
 );
 
+export const checkAuth = createAsyncThunk(
+  "/auth/checkAuth",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await Axios.get("/auth/check-auth");
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      const message = error.response?.data?.message || error.message;
+      console.error(message);
+      return rejectWithValue(message);
+    }
+  }
+);
+
 const initialState = {
   isAuthenticated: false,
   user: null,
@@ -50,34 +65,38 @@ export const authSlice = createSlice({
       .addCase(registerUser.pending, (state) => {
         state.isLoading = true;
         state.isError = null;
-        isAuthenticated = false;
       })
       .addCase(registerUser.fulfilled, (state, action) => {
-        console.log(action.payload);
         state.isLoading = false;
-        state.isAuthenticated = false;
-        console.log(action.payload);
-        state.user = null;
+        state.isError = null;
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.payload;
-        state.isAuthenticated = false;
-        state.user = null;
       })
       .addCase(loginUser.pending, (state) => {
+        (state.isLoading = true), (state.isError = null);
+      })
+      .addCase(loginUser.fulfilled, (state, action) => {
+        (state.isLoading = false), (state.isError = null);
+      })
+      .addCase(loginUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = action.payload;
+      })
+      .addCase(checkAuth.pending, (state) => {
         (state.isLoading = true),
           (state.isError = null),
           (state.isAuthenticated = false);
       })
-      .addCase(loginUser.fulfilled, (state, action) => {
+      .addCase(checkAuth.fulfilled, (state, action) => {
         (state.isLoading = false),
           (state.isError = null),
-          (state.isAuthenticated = false);
-        state.user = null;
-        console.log(action.payload);
+          (state.isAuthenticated = true);
+        state.user = action.payload.data;
+        console.log(action.payload.data);
       })
-      .addCase(loginUser.rejected, (state, action) => {
+      .addCase(checkAuth.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.payload;
         state.isAuthenticated = false;
