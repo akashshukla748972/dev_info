@@ -114,3 +114,20 @@ export const handleLoginUser = async (req, res, next) => {
     return next(new CustomError("Internal server error", 500));
   }
 };
+
+export const handleCheckAuth = async (req, res, next) => {
+  try {
+    const user = req?.user;
+    console.log(user);
+    const userData = await adminModel.findById(user.id).select("-password");
+    return res.status(200).json({
+      message: "Authrized user.",
+      isSuccess: true,
+      isError: false,
+      data: userData
+    });
+  } catch (error) {
+    console.error(`Error while varifing user, Try again`);
+    return next(new CustomError("Internal server error", 500));
+  }
+};

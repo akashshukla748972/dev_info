@@ -8,6 +8,7 @@ import errorHandler from "./middlewares/common/errorHandler.middleware.js";
 import adminRouter from "./routes/admin/admin.router.js";
 import authRouter from "./routes/auth/auth.routes.js";
 import CustomError from "./utils/CustomError.js";
+import cookieParser from "cookie-parser";
 
 const app = express();
 
@@ -16,6 +17,7 @@ connectToCloudinary();
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 app.use(
   cors({
     origin: "http://localhost:5173",
