@@ -1,4 +1,4 @@
-import {Schema, model} from "mongoose";
+import { Schema, model } from "mongoose";
 
 const adminSchema = new Schema(
   {
@@ -13,7 +13,6 @@ const adminSchema = new Schema(
     },
     phone: {
       type: String,
-      unique: true,
       default: null,
     },
     password: { type: String, required: true },

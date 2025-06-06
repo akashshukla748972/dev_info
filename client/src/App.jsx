@@ -20,24 +20,50 @@ import ProjectLayout from "./components/admin_view/project/project_layout";
 import CreateProject from "./pages/admin_view/projects/create_project";
 import { useSelector, useDispatch } from "react-redux";
 import { registerUser } from "./store/auth_slice/authSlice";
+import toast, { Toaster } from "react-hot-toast";
+import AuthLayout from "./components/auth/auth_layout";
+import Login from "./pages/auth/Login";
+import Register from "./pages/auth/register";
 
 const App = () => {
   const role = "admin";
+  const isAuthenticated = true;
   const state = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  console.log("State->", state);
   useEffect(() => {
-    const response = dispatch(registerUser());
-    console.log("Response->", response);
+    const formData = {
+      name: "Ayush Shukla",
+      email: "ayush256@gmail.com",
+      password: "Ayush@123",
+    };
+    const response = dispatch(registerUser(formData)).then((data) =>
+      data?.error?.message
+        ? toast.error(data.payload)
+        : toast.success(data.payload.message)
+    );
   }, []);
   return (
     <div className="flex flex-col overflow-hidden bg-white">
       <Routes>
-        <Route path="/" element={<CheckAuth role={role} />} />
+        <Route
+          path="/"
+          element={<CheckAuth isAuthenticated={isAuthenticated} role={role} />}
+        />
+        <Route
+          path="/auth"
+          element={
+            <CheckAuth role={role} isAuthenticated={isAuthenticated}>
+              <AuthLayout />
+            </CheckAuth>
+          }
+        >
+          <Route path="register" element={<Register />} />
+          <Route path="login" element={<Login />} />
+        </Route>
         <Route
           path="/user"
           element={
-            <CheckAuth role={role}>
+            <CheckAuth role={role} isAuthenticated={isAuthenticated}>
               <ClientLayout />
             </CheckAuth>
           }
@@ -47,7 +73,7 @@ const App = () => {
         <Route
           path="/admin"
           element={
-            <CheckAuth role={role}>
+            <CheckAuth isAuthenticated={isAuthenticated} role={role}>
               <AdminLayout />
             </CheckAuth>
           }
@@ -69,6 +95,7 @@ const App = () => {
           <Route path="logout" element={<Logout />} />
         </Route>
       </Routes>
+      <Toaster />
     </div>
   );
 };

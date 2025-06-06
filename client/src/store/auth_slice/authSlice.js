@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { Axios } from "../../services/axios";
+
 export const registerUser = createAsyncThunk(
   "auth/registerUser",
   async (formData, { rejectWithValue }) => {
@@ -15,6 +16,7 @@ export const registerUser = createAsyncThunk(
 );
 
 const initialState = {
+  isAuthenticated: false,
   user: null,
   isLoading: false,
   isError: null,
@@ -37,10 +39,12 @@ export const authSlice = createSlice({
       .addCase(registerUser.fulfilled, (state, action) => {
         console.log(action.payload);
         state.isLoading = false;
+        state.isAuthenticated = true;
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.payload;
+        state.isAuthenticated = false;
       });
   },
 });
