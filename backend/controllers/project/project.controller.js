@@ -137,3 +137,23 @@ export const handleUploadMultipleProjectImage = async (req, res, next) => {
     return next(new CustomError("Internal server error", 500));
   }
 };
+
+export const handleGetALLProject = async (req, res, next) => {
+  try {
+    const { id } = req.user;
+    const projects = await projectModel.find({ user: id });
+    if (!projects) {
+      return next(new CustomError("Project not found", 404));
+    }
+
+    return res.status(200).json({
+      message: "Getting all project successfully.",
+      data: projects,
+      isSuccess: true,
+      isError: false,
+    });
+  } catch (error) {
+    console.error(`Error while uploading project image: ${error}`);
+    return next(new CustomError("Internal server error", 500));
+  }
+};
