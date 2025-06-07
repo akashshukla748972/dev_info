@@ -9,7 +9,6 @@ export const handleUpdateProfilePhoto = async (req, res, next) => {
 
     if (file) {
       const { avatar } = req.files;
-      console.log("Avatar:", avatar);
       const allowedFormats = ["image/jpg", "image/png", "image/jpeg"];
 
       if (!allowedFormats.includes(avatar.mimetype)) {

@@ -1,4 +1,5 @@
 import projectModel from "../../models/project.model.js";
+import { uploadAvatarInCloudinary } from "../../utils/common/uploadAvatar.js";
 import { uploadMultipalFile } from "../../utils/common/uploadMultipal.js";
 import CustomError from "../../utils/CustomError.js";
 
@@ -20,10 +21,51 @@ export const handleCreateProject = async (req, res, next) => {
         );
       }
     }
+
+    const file = req?.files?.poster;
+
+    if (!file) {
+      return next(new CustomError("Poster is required, Try again.", 400));
+    }
+
+    if (file) {
+      const { poster } = req.files;
+      console.log(poster);
+      const allowedFormats = ["image/jpg", "image/png", "image/jpeg"];
+
+      if (!allowedFormats.includes(poster.mimetype)) {
+        return next(
+          new CustomError("Poster allowed type is jpg, png, or jpeg", 400)
+        );
+      }
+    }
+
+    const isDuplicate = await projectModel.findOne({ title: title });
+    if (isDuplicate) {
+      return next(
+        new CustomError("Project title already exist. try again.", 409)
+      );
+    }
+
+    const cloudinaryResponse = await uploadAvatarInCloudinary(
+      file,
+      "/admin/projects/poster"
+    );
+
+    if (cloudinaryResponse.isError) {
+      return next(new CustomError(cloudinaryResponse.message, 500));
+    }
+
+    const { response } = cloudinaryResponse;
+
     const newProject = await projectModel.create({
       user: req?.user?.id,
       title,
       description,
+      poster: {
+        public_id: response.public_id,
+        url: response.url,
+      },
     });
 
     return res.status(201).json({
