@@ -10,6 +10,20 @@ export const createProject = createAsyncThunk(
       return response.data;
     } catch (error) {
       const message = error?.response?.data?.message || error.message;
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
+export const getAllProject = createAsyncThunk(
+  "project/getAllProject",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await Axios.get("/projects/all-project", FormData);
+      console.log(response);
+      return response.data;
+    } catch (error) {
+      const message = error?.response?.data?.message || error.message;
       console.error(message);
       return rejectWithValue(error?.response?.data);
     }
@@ -39,6 +53,20 @@ const projectSlice = createSlice({
       .addCase(createProject.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.payload;
+      })
+      .addCase(getAllProject.pending, (state) => {
+        state.isLoading = true;
+        state.isError = null;
+      })
+      .addCase(getAllProject.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.projects = null;
+        state.projects = action.payload.data;
+      })
+      .addCase(getAllProject.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = action.payload;
+        state.projects = null;
       });
   },
 });

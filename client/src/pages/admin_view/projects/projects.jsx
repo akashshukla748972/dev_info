@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import PageHeading from "../../../components/admin_view/page_heading";
 import { Link } from "react-router-dom";
@@ -8,10 +8,24 @@ import {
   Info,
   SquarePlus,
 } from "lucide-react";
-import { projects } from "../../../configs/admin/index";
 import ProjectCard from "../../../components/admin_view/project_card";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllProject } from "../../../store/project_slice/projectSlice";
+import toast from "react-hot-toast";
 
 const Projects = () => {
+  const { projects } = useSelector((state) => state.projects);
+  const dispatch = useDispatch();
+
+  console.log(projects);
+
+  const handleGetAllProject = () => {
+    dispatch(getAllProject());
+  };
+
+  useEffect(() => {
+    handleGetAllProject();
+  }, [dispatch]);
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -44,9 +58,8 @@ const Projects = () => {
       </div>
 
       <div className="p-4  grid grid-cols-3 gap-4">
-        {projects.map((item) => (
-          <ProjectCard key={item.title} data={item} />
-        ))}
+        {projects &&
+          projects.map((item) => <ProjectCard key={item.title} data={item} />)}
       </div>
     </motion.div>
   );

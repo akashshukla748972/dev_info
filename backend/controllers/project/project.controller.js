@@ -142,7 +142,7 @@ export const handleGetALLProject = async (req, res, next) => {
   try {
     const { id } = req.user;
     const projects = await projectModel.find({ user: id });
-    if (!projects) {
+    if (projects.length == 0) {
       return next(new CustomError("Project not found", 404));
     }
 

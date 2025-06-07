@@ -148,9 +148,6 @@ const CreateProjectForm = () => {
               <input
                 {...register("end_date")}
                 type="date"
-                onChange={(e) => {
-                  setEndDate(e.target.value);
-                }}
                 className="border border-gray-500 p-2 rounded outline-none"
               />
             </div>
