@@ -30,6 +30,7 @@ import Register from "./pages/auth/register";
 import Loader from "./pages/common_view/loader";
 import AboutLayout from "./components/admin_view/about/about_layout";
 import About from "./pages/admin_view/about/about";
+import EditProfile from "./pages/admin_view/about/edit_user";
 
 const App = () => {
   const state = useSelector((state) => state.auth);
@@ -87,6 +88,7 @@ const App = () => {
           <Route path="dashboard" element={<AdminView />} />
           <Route path="about" element={<AboutLayout />}>
             <Route index element={<About />} />
+            <Route path="edit" element={<EditProfile />} />
           </Route>
           <Route path="skills" element={<Skills />} />
           <Route path="projects" element={<ProjectLayout />}>

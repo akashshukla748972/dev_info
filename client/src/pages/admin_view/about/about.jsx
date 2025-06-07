@@ -15,10 +15,7 @@ import PageHeading from "../../../components/admin_view/page_heading";
 
 const About = () => {
   const { user } = useSelector((state) => state.auth);
-  console.log(user);
-  const handleEditProfilePhoto = () => {
-    console.log("hello");
-  };
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -49,12 +46,12 @@ const About = () => {
                 alt=""
                 className="w-32 h-32 rounded-full"
               />
-              <span className="absolute right-0 top-20 w-10 h-10 rounded-full bg-gray-100 flex justify-center items-center">
-                <Edit
-                  onClick={handleEditProfilePhoto}
-                  className="text-gray-800 cursor-pointer"
-                />
-              </span>
+              <Link
+                to={"/admin/about/edit"}
+                className="absolute right-0 top-20 w-10 h-10 rounded-full bg-gray-100 flex justify-center items-center"
+              >
+                <Edit className="text-gray-800 cursor-pointer" />
+              </Link>
             </div>
             <div className="text-center space-y-2">
               <h2 className="text-xl font-semibold">
