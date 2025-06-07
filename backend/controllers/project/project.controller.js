@@ -30,7 +30,6 @@ export const handleCreateProject = async (req, res, next) => {
 
     if (file) {
       const { poster } = req.files;
-      console.log(poster);
       const allowedFormats = ["image/jpg", "image/png", "image/jpeg"];
 
       if (!allowedFormats.includes(poster.mimetype)) {
@@ -46,7 +45,6 @@ export const handleCreateProject = async (req, res, next) => {
         new CustomError("Project title already exist. try again.", 409)
       );
     }
-
     const cloudinaryResponse = await uploadAvatarInCloudinary(
       file,
       "/admin/projects/poster"

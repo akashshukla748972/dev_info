@@ -1,16 +1,21 @@
 import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
-import {  CloudUpload, X } from "lucide-react";
+import { CloudUpload, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import {useDispatch} from "react-redux"
+import { useDispatch, useSelector } from "react-redux";
+import { createProject } from "../../../store/project_slice/projectSlice";
+import { toast } from "react-hot-toast";
+import { Navigate } from "react-router-dom";
 
 const CreateProjectForm = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
-  } = useForm();
+    formState: { errors, isValid },
+  } = useForm({
+    mode: "onChange",
+  });
   const [uploadImageName, setUploadImageName] = useState(null);
   const [uploadImageData, setUploadImageData] = useState(null);
   const [startData, setStartDate] = useState(null);
@@ -18,16 +23,27 @@ const CreateProjectForm = () => {
   const uploadFileRef = useRef(null);
   const navigate = useNavigate();
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const { isLoading } = useSelector((state) => state.projects);
 
   const handleCreteProject = (data) => {
     const formData = new FormData();
     formData.append("poster", uploadImageData);
     formData.append("title", data.title);
     formData.append("description", data.description);
+    formData.append("client_name", data.client_name);
+    formData.append("start_date", data.start_date);
+    formData.append("end_date", data.end_date);
+    formData.append("project_size", data.project_size);
 
-  
-    
+    dispatch(createProject(formData)).then((data) => {
+      if (data?.payload?.isError) {
+        toast.error(data?.payload?.message);
+      } else {
+        toast.success(data?.payload?.message);
+        navigate(-1);
+      }
+    });
   };
 
   const handleSetFileUploadData = (data) => {
@@ -56,21 +72,21 @@ const CreateProjectForm = () => {
               Project Title
             </label>
             <input
-              {...register("project_title", {
+              {...register("title", {
                 required: "Project name is required.",
               })}
               type="text"
               className={`border ${
-                errors.project_title ? "border-red-500" : "border-gray-500"
+                errors.title ? "border-red-500" : "border-gray-500"
               }  p-2 rounded outline-none`}
               placeholder="Project name"
             />
-            {errors.project_title && (
-              <p className="text-red-500">{errors.project_title.message}</p>
+            {errors.title && (
+              <p className="text-red-500">{errors.title.message}</p>
             )}
           </div>
           <div className="flex flex-col space-y-3">
-            <label htmlFor="project_title" className="">
+            <label htmlFor="client_name" className="">
               Client Name
             </label>
             <input
@@ -216,8 +232,18 @@ const CreateProjectForm = () => {
           </div>
 
           <div className="flex justify-end gap-10 font-semibold">
-            <button className="bg-green-500 px-8 py-2 rounded-sm" type="submit">
-              Add
+            <button
+              disabled={!isValid || isLoading}
+              className={` ${
+                isValid ? "bg-green-500" : "bg-green-300"
+              } px-8 py-2 rounded-sm`}
+              type="submit"
+            >
+              {isLoading ? (
+                <div className="w-5 h-5 rounded-full border-2 border-gray-600 border-r-gray-200 animate-spin"></div>
+              ) : (
+                "Add"
+              )}
             </button>
             <button
               className="bg-red-500 px-8 py-2 rounded-sm"

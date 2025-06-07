@@ -5,12 +5,13 @@ export const createProject = createAsyncThunk(
   "project/createProject",
   async (FormData, { rejectWithValue }) => {
     try {
-      const response = Axios.post("/projects/create", FormData);
+      const response = await Axios.post("/projects/create", FormData);
+      console.log(response);
       return response.data;
     } catch (error) {
       const message = error?.response?.data?.message || error.message;
       console.error(message);
-      return rejectWithValue(message);
+      return rejectWithValue(error?.response?.data);
     }
   }
 );
@@ -37,7 +38,7 @@ const projectSlice = createSlice({
       })
       .addCase(createProject.rejected, (state, action) => {
         state.isLoading = false;
-        state.isError(action.payload);
+        state.isError = action.payload;
       });
   },
 });
