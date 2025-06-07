@@ -5,16 +5,34 @@ import CustomError from "../../utils/CustomError.js";
 
 export const handleCreateProject = async (req, res, next) => {
   try {
-    const { title, description } = req.body;
-    if (!title || !description) {
-      const errorField = [];
-      if (!title) errorField.push("Tile");
-      if (!description) errorField.push("Description");
-      if (errorField.length > 0) {
+    const {
+      title,
+      description,
+      client_name,
+      start_date,
+      end_date,
+      difficulty_level,
+    } = req.body;
+    if (
+      !title ||
+      !description ||
+      !client_name ||
+      !start_date ||
+      !difficulty_level
+    ) {
+      const errorFields = [];
+
+      if (!title) errorFields.push("Title");
+      if (!description) errorFields.push("Description");
+      if (!client_name) errorFields.push("Client Name");
+      if (!start_date) errorFields.push("Start Date");
+      if (!difficulty_level) errorFields.push("Difficulty Level");
+
+      if (errorFields.length > 0) {
         return next(
           new CustomError(
-            `${errorField.join(", ")} ${
-              errorField.length == 1 ? "is" : "are"
+            `${errorFields.join(", ")} ${
+              errorFields.length === 1 ? "is" : "are"
             } required`,
             400
           )
@@ -55,11 +73,17 @@ export const handleCreateProject = async (req, res, next) => {
     }
 
     const { response } = cloudinaryResponse;
-
+    const status = !end_date ? "Pending" : "Fulfilled";
+    const check_end_date = !end_date ? null : new Date(end_date);
     const newProject = await projectModel.create({
       user: req?.user?.id,
       title,
       description,
+      client_name: client_name,
+      difficulty_level: difficulty_level,
+      start_date: new Date(start_date),
+      end_date: check_end_date,
+      status,
       poster: {
         public_id: response.public_id,
         url: response.url,
