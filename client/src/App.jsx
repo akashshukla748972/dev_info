@@ -5,7 +5,6 @@ import AdminView from "./pages/admin_view";
 import CheckAuth from "./components/common_view/check-auth";
 import ClientLayout from "./components/client_view/client_layout";
 import AdminLayout from "./components/admin_view/admin_layout";
-import About from "./pages/admin_view/about";
 import Skills from "./pages/admin_view/skill";
 import Projects from "./pages/admin_view/projects/projects";
 import Experience from "./pages/admin_view/experience";
@@ -29,6 +28,8 @@ import AuthLayout from "./components/auth/auth_layout";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/register";
 import Loader from "./pages/common_view/loader";
+import AboutLayout from "./components/admin_view/about/about_layout";
+import About from "./pages/admin_view/about/about";
 
 const App = () => {
   const state = useSelector((state) => state.auth);
@@ -84,7 +85,9 @@ const App = () => {
           }
         >
           <Route path="dashboard" element={<AdminView />} />
-          <Route path="about" element={<About />} />
+          <Route path="about" element={<AboutLayout />}>
+            <Route index element={<About />} />
+          </Route>
           <Route path="skills" element={<Skills />} />
           <Route path="projects" element={<ProjectLayout />}>
             <Route index element={<Projects />} />

@@ -1,6 +1,5 @@
 import React from "react";
 import { motion } from "framer-motion";
-import PageHeading from "../../components/admin_view/page_heading";
 import {
   Calendar,
   Edit,
@@ -12,6 +11,7 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import PageHeading from "../../../components/admin_view/page_heading";
 
 const About = () => {
   const { user } = useSelector((state) => state.auth);
@@ -39,23 +39,27 @@ const About = () => {
             className="w-full h-[500px]"
           />
           {/* profile */}
-          <div className="absolute -bottom-22 left-[50%] -translate-x-[50%] space-y-2">
-            <img
-              src={
-                user.avatar?.url ||
-                "https://img.freepik.com/free-photo/fun-3d-cartoon-teenage-boy_183364-81073.jpg?ga=GA1.1.153015461.1743153162&semt=ais_items_boosted&w=740"
-              }
-              alt=""
-              className="w-32 h-32 rounded-full"
-            />
-            <span className="absolute right-12 top-20 w-10 h-10 rounded-full bg-gray-100 flex justify-center items-center">
-              <Edit
-                onClick={handleEditProfilePhoto}
-                className="text-gray-800 cursor-pointer"
+          <div className="absolute -bottom-22 left-[50%] -translate-x-[50%] space-y-2 ">
+            <div className="relative flex flex-col justify-center items-center w-fit">
+              <img
+                src={
+                  user.avatar?.url ||
+                  "https://img.freepik.com/free-photo/fun-3d-cartoon-teenage-boy_183364-81073.jpg?ga=GA1.1.153015461.1743153162&semt=ais_items_boosted&w=740"
+                }
+                alt=""
+                className="w-32 h-32 rounded-full"
               />
-            </span>
+              <span className="absolute right-0 top-20 w-10 h-10 rounded-full bg-gray-100 flex justify-center items-center">
+                <Edit
+                  onClick={handleEditProfilePhoto}
+                  className="text-gray-800 cursor-pointer"
+                />
+              </span>
+            </div>
             <div className="text-center space-y-2">
-              <h2 className="text-xl font-semibold">{user.name}</h2>
+              <h2 className="text-xl font-semibold">
+                {user.name.slice(0, 12)}..
+              </h2>
               <p className="">Designer</p>
             </div>
           </div>
