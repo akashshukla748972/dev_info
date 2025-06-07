@@ -1,8 +1,9 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
-import { Cloud, CloudUpload, Link, X } from "lucide-react";
+import {  CloudUpload, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import {useDispatch} from "react-redux"
 
 const CreateProjectForm = () => {
   const {
@@ -17,11 +18,16 @@ const CreateProjectForm = () => {
   const uploadFileRef = useRef(null);
   const navigate = useNavigate();
 
+  const dispatch = useDispatch()
+
   const handleCreteProject = (data) => {
     const formData = new FormData();
-    formData.append("file", uploadImageData);
-    console.log("Project data->", data);
-    console.log("Project file->", formData.get("file"));
+    formData.append("poster", uploadImageData);
+    formData.append("title", data.title);
+    formData.append("description", data.description);
+
+  
+    
   };
 
   const handleSetFileUploadData = (data) => {
@@ -143,29 +149,25 @@ const CreateProjectForm = () => {
 
           <div className="flex flex-col space-y-3">
             <label htmlFor="project_title" className="">
-              Enter some Details
+              Enter project description
             </label>
             <textarea
-              {...register("project_description", {
+              {...register("description", {
                 required: "Project Description is required.",
               })}
               type="text"
               className={`border ${
-                errors.project_description
-                  ? "border-red-500"
-                  : "border-gray-500"
+                errors.description ? "border-red-500" : "border-gray-500"
               }  p-2 rounded outline-none`}
               placeholder="Project details"
             ></textarea>
-            {errors.project_description && (
-              <p className="text-red-500">
-                {errors.project_description.message}
-              </p>
+            {errors.description && (
+              <p className="text-red-500">{errors.description.message}</p>
             )}
           </div>
 
           <div className="flex flex-col space-y-3">
-            <label className="">Upload Project Picture</label>
+            <label className="">Upload Project Poster</label>
 
             {/* Hidden Input */}
             <input
