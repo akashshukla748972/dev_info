@@ -18,8 +18,6 @@ const CreateProjectForm = () => {
   });
   const [uploadImageName, setUploadImageName] = useState(null);
   const [uploadImageData, setUploadImageData] = useState(null);
-  const [startData, setStartDate] = useState(null);
-  const [endData, setEndDate] = useState(null);
   const uploadFileRef = useRef(null);
   const navigate = useNavigate();
 
@@ -34,7 +32,7 @@ const CreateProjectForm = () => {
     formData.append("client_name", data.client_name);
     formData.append("start_date", data.start_date);
     formData.append("end_date", data.end_date);
-    formData.append("project_size", data.project_size);
+    formData.append("difficulty_level", data.difficulty_level);
 
     dispatch(createProject(formData)).then((data) => {
       if (data?.payload?.isError) {
@@ -105,21 +103,28 @@ const CreateProjectForm = () => {
           </div>
           <div className="grid grid-cols-3 space-x-3 justify-between">
             <div className="flex flex-col space-y-2">
-              <label htmlFor="project_title" className="">
-                Project Size
+              <label htmlFor="difficulty_level" className="">
+                Difficulty Level
               </label>
-              <input
-                {...register("project_size", {
-                  required: "Project size is required.",
+
+              <select
+                {...register("difficulty_level", {
+                  required: "Difficulty Level is required",
                 })}
-                type="text"
+                id="difficulty_level"
                 className={`border ${
-                  errors.project_size ? "border-red-500" : "border-gray-500"
-                }  p-2 rounded outline-none`}
-                placeholder="Project name"
-              />
-              {errors.project_size && (
-                <p className="text-red-500">{errors.project_size.message}</p>
+                  errors.difficulty_level ? "border-red-500" : "border-gray-500"
+                }  p-2 rounded outline-none bg-gray-800`}
+              >
+                <option value="">Select Difficulty Level</option>
+                <option value="Beginner">Beginner</option>
+                <option value="Intermediate">Intermediate</option>
+                <option value="Advanced">Advanced</option>
+              </select>
+              {errors.difficulty_level && (
+                <p className="text-red-500">
+                  {errors.difficulty_level.message}
+                </p>
               )}
             </div>
             <div className="flex flex-col space-y-2">
@@ -129,10 +134,6 @@ const CreateProjectForm = () => {
                   required: "Start date is required.",
                 })}
                 type="date"
-                value={startData || ""}
-                onChange={(e) => {
-                  setStartDate(e.target.value);
-                }}
                 className={`border ${
                   errors.start_date ? "border-red-500" : "border-gray-500"
                 } p-2 rounded outline-none`}
@@ -145,21 +146,13 @@ const CreateProjectForm = () => {
             <div className="flex flex-col space-y-2">
               <label className="">Ending date</label>
               <input
-                {...register("end_date", {
-                  required: "End date is required.",
-                })}
+                {...register("end_date")}
                 type="date"
-                value={endData || ""}
                 onChange={(e) => {
                   setEndDate(e.target.value);
                 }}
-                className={`border ${
-                  errors.end_date ? "border-red-500" : "border-gray-500"
-                } p-2 rounded outline-none`}
+                className="border border-gray-500 p-2 rounded outline-none"
               />
-              {errors.end_date && (
-                <p className="text-red-500">{errors.end_date.message}</p>
-              )}
             </div>
           </div>
 
