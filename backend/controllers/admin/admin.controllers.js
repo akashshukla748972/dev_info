@@ -77,19 +77,20 @@ export const handleUpdateProfileDetails = async (req, res, next) => {
     const { id } = req.user;
     const data = req.body;
 
-    const updatedDate = await adminModel.findByIdAndUpdate(
-      id,
-      {
-        name: data?.name,
-        email: data?.email,
-        phone: data?.phone,
-        bio: data?.bio,
-        address: data?.address,
-      },
-      { new: true }
-    );
+    const updatedDate = await adminModel
+      .findByIdAndUpdate(
+        id,
+        {
+          name: data?.name,
+          email: data?.email,
+          phone: data?.phone,
+          bio: data?.bio,
+          address: data?.address,
+        },
+        { new: true }
+      )
+      .select("-password");
 
-    console.log(updatedDate);
     return res.status(200).json({
       message: "Profile details updated successfully.",
       isSuccess: true,
