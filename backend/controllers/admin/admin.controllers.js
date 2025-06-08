@@ -1,6 +1,7 @@
 import adminModel from "../../models/admin.model.js";
 import CustomError from "../../utils/CustomError.js";
 import { uploadAvatarInCloudinary } from "../../utils/common/uploadAvatar.js";
+import { v2 as cloudinary } from "cloudinary";
 
 export const handleUpdateProfilePhoto = async (req, res, next) => {
   try {
@@ -18,12 +19,28 @@ export const handleUpdateProfilePhoto = async (req, res, next) => {
       }
     }
 
+    const adminData = await adminModel.findById(id).select("-password");
+    if (adminData.avatar?.url) {
+      const { result } = await cloudinary.uploader.destroy(
+        adminData.avatar.public_id
+      );
+      console.log("delete->", result);
+      if (result !== "ok") {
+        return next(new CustomError("Failed to delete image, Try again", 500));
+      }
+      await adminModel.findByIdAndUpdate(id, {
+        avatar: {
+          public_id: null,
+          url: null,
+        },
+      });
+    }
+
     const cloudinaryResponse = await uploadAvatarInCloudinary(
       file,
-      "admin/ profile"
+      "def_info/admin/ profile"
     );
 
-    console.log(cloudinaryResponse);
     if (cloudinaryResponse.isError) {
       return next(new CustomError(cloudinaryResponse.message, 500));
     }
