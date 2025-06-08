@@ -3,6 +3,7 @@ import {
   handleCreateSkill,
   handleDeleteSkill,
   handleGetAllSkill,
+  handleUpdateSkill,
 } from "../../controllers/skill/skill.controller.js";
 import { authMiddleware } from "../../middlewares/auth/authCheck.middleware.js";
 import { verifyObjectId } from "../../middlewares/common/verifyId.js";
@@ -16,6 +17,12 @@ router.delete(
   verifyObjectId,
   authMiddleware,
   handleDeleteSkill
+);
+router.put(
+  "/update-skill/:id",
+  verifyObjectId,
+  authMiddleware,
+  handleUpdateSkill
 );
 
 export default router;

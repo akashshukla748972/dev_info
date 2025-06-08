@@ -96,7 +96,6 @@ export const handleDeleteSkill = async (req, res, next) => {
   try {
     const { id } = req.params;
     const deletedSkill = await skillModel.findByIdAndDelete(id);
-    console.log("delete->", deletedSkill);
     if (!deletedSkill) {
       return next(new CustomError("Skill not found.", 404));
     }
@@ -108,6 +107,78 @@ export const handleDeleteSkill = async (req, res, next) => {
     });
   } catch (error) {
     console.error("Error while deleting skill:", error);
+    return next(new CustomError("Internal server error", 500));
+  }
+};
+
+export const handleUpdateSkill = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const userId = req?.user?.id;
+    const { name, level, category, subCategory, description, isActive } =
+      req.body;
+
+    const validLevels = ["Beginner", "Intermediate", "Advanced"];
+    if (level && !validLevels.includes(level)) {
+      return next(
+        new CustomError(`Level must be one of: ${validLevels.join(", ")}`, 400)
+      );
+    }
+
+    const validCategory = [
+      "Frontend",
+      "Backend",
+      "Database",
+      "Additional Tool",
+    ];
+    if (category && !validCategory.includes(category)) {
+      return next(
+        new CustomError(
+          `Category must be one of: ${validCategory.join(", ")}`,
+          400
+        )
+      );
+    }
+
+    const validSubCategory = ["Framework", "Language", "Tools"];
+    if (subCategory && !validSubCategory.includes(subCategory)) {
+      return next(
+        new CustomError(
+          `Sub category must be one of: ${validSubCategory.join(", ")}`,
+          400
+        )
+      );
+    }
+
+    const updateFields = {};
+    if (name) updateFields.name = name.trim();
+    if (level) updateFields.level = level.trim();
+    if (category) updateFields.category = category.trim();
+    if (subCategory) updateFields.subCategory = subCategory.trim();
+    if (description) updateFields.description = description.trim();
+    if (typeof isActive === "boolean") updateFields.isActive = isActive;
+
+    const updatedSkill = await skillModel.findOneAndUpdate(
+      {
+        _id: id,
+        createdBy: userId,
+      },
+      updateFields,
+      { new: true }
+    );
+
+    if (!updatedSkill) {
+      return next(new CustomError("Skill not found.", 404));
+    }
+
+    return res.status(200).json({
+      message: "Skill updated successfully.",
+      data: updatedSkill,
+      isSuccess: true,
+      isError: false,
+    });
+  } catch (error) {
+    console.error("Error while updating skill:", error);
     return next(new CustomError("Internal server error", 500));
   }
 };
