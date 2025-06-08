@@ -87,7 +87,27 @@ export const handleGetAllSkill = async (req, res, next) => {
       isError: false,
     });
   } catch (error) {
-    console.error("Error while creating skill:", error);
+    console.error("Error while getting all skill:", error);
+    return next(new CustomError("Internal server error", 500));
+  }
+};
+
+export const handleDeleteSkill = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const deletedSkill = await skillModel.findByIdAndDelete(id);
+    console.log("delete->", deletedSkill);
+    if (!deletedSkill) {
+      return next(new CustomError("Skill not found.", 404));
+    }
+
+    return res.status(200).json({
+      message: "Skill are deleted successfully.",
+      isSuccess: true,
+      isError: false,
+    });
+  } catch (error) {
+    console.error("Error while deleting skill:", error);
     return next(new CustomError("Internal server error", 500));
   }
 };
