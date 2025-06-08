@@ -3,10 +3,15 @@ import { Outlet } from "react-router-dom";
 import Sidebar from "./sidebar";
 import AdminHeader from "./admin_header";
 import AdminFooter from "./admin_footer";
+import { useDispatch } from "react-redux";
+import { getLoggedAdminData } from "../../store/about_slice/adminSlice";
 
 const AdminLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getLoggedAdminData());
+  }, []);
   return (
     <div className="flex min-h-screen w-full bg-gray-900 text-gray-100">
       <Sidebar openSidebar={isSidebarOpen} setOpenSidebar={setIsSidebarOpen} />

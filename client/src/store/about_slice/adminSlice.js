@@ -31,6 +31,22 @@ export const updateProfileImage = createAsyncThunk(
   }
 );
 
+export const updateProfileDetails = createAsyncThunk(
+  "admin/updateProfileDetails",
+  async (FormData, { rejectWithValue }) => {
+    try {
+      const response = await Axios.put("admin/update-profile-detail", FormData);
+      console.log(response);
+      return response.data;
+    } catch (error) {
+      const message = error?.response?.data?.message || error.message;
+      console.error(message);
+
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
 const initialState = {
   admin: null,
   isLoading: false,
@@ -66,6 +82,19 @@ const adminSlice = createSlice({
         state.admin = action.payload.data;
       })
       .addCase(getLoggedAdminData.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = action.payload;
+      })
+      .addCase(updateProfileDetails.pending, (state) => {
+        state.isLoading = true;
+        state.isError = null;
+      })
+      .addCase(updateProfileDetails.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = null;
+        state.admin = action.payload.data;
+      })
+      .addCase(updateProfileDetails.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.payload;
       });

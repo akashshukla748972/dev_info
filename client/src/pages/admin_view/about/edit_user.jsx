@@ -6,19 +6,23 @@ import { useForm } from "react-hook-form";
 import { CloudUpload, X } from "lucide-react";
 import {
   getLoggedAdminData,
+  updateProfileDetails,
   updateProfileImage,
 } from "../../../store/about_slice/adminSlice";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const EditProfile = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, isValid },
   } = useForm({
     mode: "onChange",
   });
   const { admin, isLoading } = useSelector((state) => state.admin);
+  const navigate = useNavigate();
 
   const dispatch = useDispatch();
   const [uploadImageName, setUploadImageName] = useState(null);
@@ -52,10 +56,17 @@ const EditProfile = () => {
 
   const handleEditProfile = (data) => {
     setUpdateDetailsLoading(true);
-    setTimeout(() => {
-      setUpdateDetailsLoading(false);
-    }, 3000);
-    console.log(data);
+    dispatch(updateProfileDetails(data)).then((data) => {
+      if (data?.payload?.isError) {
+        toast.error(data.payload.message);
+      } else {
+        dispatch(getLoggedAdminData());
+        toast.success(data.payload.message);
+        setUpdateDetailsLoading(false);
+        reset();
+        navigate(-1);
+      }
+    });
   };
   return (
     <motion.div

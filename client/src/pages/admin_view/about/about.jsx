@@ -56,7 +56,7 @@ const About = () => {
             </div>
             <div className="text-center space-y-2">
               <h2 className="text-xl font-semibold">
-                {admin.name.slice(0, 12)}..
+                {admin?.name.slice(0, 12) || "Not added"}..
               </h2>
               <p className="">Designer</p>
             </div>
@@ -70,14 +70,14 @@ const About = () => {
                 <Mail />
                 <span className="">Email</span>
               </div>
-              <div className="">{admin.email}</div>
+              <div className="">{admin?.email || "Not added"}</div>
             </div>
             <div className="">
               <div className="flex">
                 <Calendar />
                 <span className="">DOB</span>
               </div>
-              <div className="">09/09/2009</div>
+              <div className="">{admin?.dob || "Not added"}</div>
             </div>
           </div>
           <div className="flex space-x-6">
@@ -86,14 +86,14 @@ const About = () => {
                 <Mail />
                 <span className="">Contact Us</span>
               </div>
-              <div className="">6262636566</div>
+              <div className="">{admin?.phone || "Not added"}</div>
             </div>
             <div className="">
               <div className="flex">
                 <Calendar />
                 <span className="">Loaction</span>
               </div>
-              <div className="">Indore Madhya Pradesh India</div>
+              <div className="">{admin?.address || "Not added"}</div>
             </div>
           </div>
         </div>

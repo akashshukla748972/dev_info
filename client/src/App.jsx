@@ -43,7 +43,6 @@ const App = () => {
   const handleGetLogedInUserData = () => {
     dispatch(checkAuth()).then((data) => {
       if (data?.payload?.isSuccess) {
-        dispatch(getLoggedAdminData());
       }
     });
   };
