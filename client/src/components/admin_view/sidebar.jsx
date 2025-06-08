@@ -8,7 +8,7 @@ import { NavLink } from "react-router-dom";
 const Sidebar = ({ openSidebar, setOpenSidebar }) => {
   return (
     <motion.div
-      className={`relative z-10 transition-all ease-in-out duration-300 flex-shrink-0  ${
+      className={`relative h-full overflow-scroll hiddenScrollbar z-10 transition-all ease-in-out duration-300 flex-shrink-0  ${
         openSidebar ? "w-64" : "w-20"
       }`}
     >
@@ -27,7 +27,7 @@ const Sidebar = ({ openSidebar, setOpenSidebar }) => {
           {sidebarItem.map((item) => (
             <NavLink
               className={({ isActive }) =>
-                `block rounded-lg mb-2 transition-colors ${
+                `block rounded-lg mb-1 transition-colors ${
                   isActive
                     ? "bg-gray-700 text-white"
                     : "hover:bg-gray-700 text-gray-300"

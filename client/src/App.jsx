@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import ClientView from "./pages/client_view";
-import AdminView from "./pages/admin_view";
 import CheckAuth from "./components/common_view/check-auth";
 import ClientLayout from "./components/client_view/client_layout";
 import AdminLayout from "./components/admin_view/admin_layout";
@@ -18,11 +17,7 @@ import Logout from "./pages/admin_view/logout";
 import ProjectLayout from "./components/admin_view/project/project_layout";
 import CreateProject from "./pages/admin_view/projects/create_project";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  checkAuth,
-  loginUser,
-  registerUser,
-} from "./store/auth_slice/authSlice";
+import { checkAuth } from "./store/auth_slice/authSlice";
 import toast, { Toaster } from "react-hot-toast";
 import AuthLayout from "./components/auth/auth_layout";
 import Login from "./pages/auth/Login";
@@ -31,7 +26,8 @@ import Loader from "./pages/common_view/loader";
 import AboutLayout from "./components/admin_view/about/about_layout";
 import About from "./pages/admin_view/about/about";
 import EditProfile from "./pages/admin_view/about/edit_user";
-import { getLoggedAdminData } from "./store/about_slice/adminSlice";
+import DashboardLayout from "./components/admin_view/dashboard/dashboard_layout";
+import AdminView from "./pages/admin_view/dashboard";
 
 const App = () => {
   const state = useSelector((state) => state.auth);
@@ -54,7 +50,7 @@ const App = () => {
     return <Loader />;
   }
   return (
-    <div className="flex flex-col overflow-hidden bg-white">
+    <div className="flex h-screen text-gray-100 overflow-hidden">
       <Routes>
         <Route
           path="/"
@@ -89,7 +85,9 @@ const App = () => {
             </CheckAuth>
           }
         >
-          <Route path="dashboard" element={<AdminView />} />
+          <Route path="dashboard" element={<DashboardLayout />}>
+            <Route index element={<AdminView />} />
+          </Route>
           <Route path="about" element={<AboutLayout />}>
             <Route index element={<About />} />
             <Route path="edit" element={<EditProfile />} />

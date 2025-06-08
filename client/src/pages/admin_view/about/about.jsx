@@ -18,7 +18,8 @@ const About = () => {
   const { admin } = useSelector((state) => state.admin);
 
   return (
-    <motion.div
+    <div className="flex-1 overflow-auto relative">
+      <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -119,6 +120,8 @@ const About = () => {
         </div>
       </motion.section>
     </motion.div>
+    </div>
+    
   );
 };
 
