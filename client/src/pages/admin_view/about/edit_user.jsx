@@ -4,6 +4,11 @@ import PageHeading from "../../../components/admin_view/page_heading";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { CloudUpload, X } from "lucide-react";
+import {
+  getLoggedAdminData,
+  updateProfileImage,
+} from "../../../store/about_slice/adminSlice";
+import toast from "react-hot-toast";
 
 const EditProfile = () => {
   const {
@@ -13,10 +18,12 @@ const EditProfile = () => {
   } = useForm({
     mode: "onChange",
   });
-  const { user } = useSelector((state) => state.auth);
+  const { admin, isLoading } = useSelector((state) => state.admin);
+
   const dispatch = useDispatch();
   const [uploadImageName, setUploadImageName] = useState(null);
   const [uploadImageData, setUploadImageData] = useState(null);
+  const [updateDetailsLoading, setUpdateDetailsLoading] = useState(false);
   const selectImageRef = useRef(null);
 
   const handleSetFileUploadData = (data) => {
@@ -27,11 +34,27 @@ const EditProfile = () => {
     }
   };
 
-  const hanleUploadProfileImage = () => {
-    alert("");
+  const handleUploadProfileImage = () => {
+    const formData = new FormData();
+    formData.append("avatar", uploadImageData);
+    dispatch(updateProfileImage(formData)).then((data) => {
+      if (data?.payload?.isError) {
+        toast.error(data.payload.message);
+      } else {
+        toast.success(data.payload.message);
+        dispatch(getLoggedAdminData());
+        setUploadImageData(null);
+        setUploadImageName(null);
+        selectImageRef.current.value = "";
+      }
+    });
   };
 
-  const hanleEditProfile = (data) => {
+  const handleEditProfile = (data) => {
+    setUpdateDetailsLoading(true);
+    setTimeout(() => {
+      setUpdateDetailsLoading(false);
+    }, 3000);
     console.log(data);
   };
   return (
@@ -50,15 +73,16 @@ const EditProfile = () => {
           <div className="flex flex-col items-center justify-center my-6 space-y-4">
             <img
               src={
-                user?.avatar?.url ||
-                "https://img.freepik.com/premium-vector/silver-membership-icon-default-avatar-profile-icon-membership-icon-social-media-user-image-vector-illustration_561158-4195.jpg?semt=ais_hybrid&w=740"
+                admin?.avatar?.url
+                  ? admin?.avatar?.url
+                  : "https://img.freepik.com/premium-vector/silver-membership-icon-default-avatar-profile-icon-membership-icon-social-media-user-image-vector-illustration_561158-4195.jpg?semt=ais_hybrid&w=740"
               }
               alt="profile"
               className="h-32 w-32 rounded-full"
             />
             <div className="text-center">
-              <h2 className="text-[17px] font-semibold">{user.name}</h2>
-              <h2 className="text-gray-500 font-semibold">{user.email}</h2>
+              <h2 className="text-[17px] font-semibold">{admin.name}</h2>
+              <h2 className="text-gray-500 font-semibold">{admin.email}</h2>
             </div>
           </div>
 
@@ -79,7 +103,7 @@ const EditProfile = () => {
                         e.stopPropagation();
                         setUploadImageName(null);
                         if (selectImageRef.current) {
-                          selectImageRef.current.data = "";
+                          selectImageRef.current.value = "";
                         }
                         if (uploadImageData) {
                           setUploadImageData(null);
@@ -89,7 +113,7 @@ const EditProfile = () => {
                     />
                   </div>
                 ) : (
-                  "Click to upload project image"
+                  "Click to upload profile image"
                 )}
               </p>
             </div>
@@ -103,13 +127,17 @@ const EditProfile = () => {
 
           <div className="mt-6">
             <button
-              onClick={hanleUploadProfileImage}
+              onClick={handleUploadProfileImage}
               disabled={!uploadImageName}
               className={`${
                 !uploadImageName ? "bg-gray-700 " : "bg-gray-500"
-              } w-full p-2 rounded`}
+              } w-full p-2 rounded flex justify-center`}
             >
-              Upload Image
+              {isLoading ? (
+                <div className="w-5 h-5 rounded-full border-2 border-gray-600 border-r-gray-200 animate-spin"></div>
+              ) : (
+                "Upload Image"
+              )}
             </button>
           </div>
         </section>
@@ -117,7 +145,7 @@ const EditProfile = () => {
           <h2 className="text-xl font-semibold">Edit Profile Details</h2>
           <hr className="mt-2 mb-6" />
           <form
-            onSubmit={handleSubmit(hanleEditProfile)}
+            onSubmit={handleSubmit(handleEditProfile)}
             action=""
             className="flex flex-col space-y-4 text-gray-300"
           >
@@ -128,7 +156,7 @@ const EditProfile = () => {
                 </label>
                 <input
                   {...register("name", { required: "Name is required" })}
-                  defaultValue={user.name}
+                  defaultValue={admin.name}
                   type="text"
                   id="name"
                   className={`border ${
@@ -143,7 +171,7 @@ const EditProfile = () => {
                 </label>
                 <input
                   {...register("email", { required: "Email is required" })}
-                  defaultValue={user.email}
+                  defaultValue={admin.email}
                   type="text"
                   id="email"
                   className={`border ${
@@ -160,7 +188,7 @@ const EditProfile = () => {
               </label>
               <input
                 {...register("phone", { required: "Phone number is required" })}
-                defaultValue={user?.phone}
+                defaultValue={admin?.phone}
                 type="text"
                 id="phone"
                 className={`border ${
@@ -176,7 +204,7 @@ const EditProfile = () => {
               </label>
               <textarea
                 {...register("bio", { required: "Bio number is required" })}
-                defaultValue={user?.bio}
+                defaultValue={admin?.bio}
                 type="text"
                 id="bio"
                 className={`border ${
@@ -194,7 +222,7 @@ const EditProfile = () => {
                 {...register("address", {
                   required: "Address number is required",
                 })}
-                defaultValue={user?.address}
+                defaultValue={admin?.address}
                 type="text"
                 id="address"
                 className={`border ${
@@ -206,13 +234,19 @@ const EditProfile = () => {
 
             <div className="flex justify-end my-6">
               <button
-                disabled={!isValid}
+                disabled={!isValid || updateDetailsLoading}
                 type="submit"
                 className={`${
-                  isValid ? "bg-gray-500" : "bg-gray-700"
+                  isValid
+                    ? "w-52 flex justify-center bg-gray-500"
+                    : "bg-gray-700"
                 } py-2 px-10 rounded-full`}
               >
-                Update Profile
+                {updateDetailsLoading ? (
+                  <div className="w-6 h-6 rounded-full border-2 border-gray-600 border-r-gray-200 animate-spin"></div>
+                ) : (
+                  "Update Details"
+                )}
               </button>
             </div>
           </form>

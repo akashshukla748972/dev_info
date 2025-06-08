@@ -27,7 +27,8 @@ const AdminHeader = () => {
     }
   };
 
-  const { user } = useSelector((state) => state.auth);
+  const { admin } = useSelector((state) => state.admin);
+
   return (
     <div className="flex bg-muted p-4 bg-gray-800 border-b border-gray-700">
       <div className="flex flex-1 justify-between">
@@ -58,7 +59,7 @@ const AdminHeader = () => {
           <div className="">
             <img
               src={
-                user.avatar.url ||
+                admin?.avatar?.url ||
                 "https://i.pinimg.com/736x/b8/91/d5/b891d5eda3bfec2997828f410288c4b9.jpg"
               }
               alt="user_logo"
@@ -66,7 +67,7 @@ const AdminHeader = () => {
             />
           </div>
           <div className="flex items-center space-x-2">
-            <p className="">{user.name}</p>
+            <p className="">{admin?.name}</p>
             <ChevronDown className="opacity-50" />
           </div>
         </div>

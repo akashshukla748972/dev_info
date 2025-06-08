@@ -37,9 +37,9 @@ export const checkAuth = createAsyncThunk(
       const response = await Axios.get("/auth/check-auth");
       return response.data;
     } catch (error) {
-      console.error(error);
       const message = error.response?.data?.message || error.message;
-      return rejectWithValue(message);
+      console.error(message);
+      return rejectWithValue(error.response?.data);
     }
   }
 );

@@ -4,7 +4,7 @@ import { uploadAvatarInCloudinary } from "../../utils/common/uploadAvatar.js";
 
 export const handleUpdateProfilePhoto = async (req, res, next) => {
   try {
-    const { id } = req.params;
+    const { id } = req.user;
     const file = req?.files?.avatar;
 
     if (file) {

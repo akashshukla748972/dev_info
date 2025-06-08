@@ -31,6 +31,7 @@ import Loader from "./pages/common_view/loader";
 import AboutLayout from "./components/admin_view/about/about_layout";
 import About from "./pages/admin_view/about/about";
 import EditProfile from "./pages/admin_view/about/edit_user";
+import { getLoggedAdminData } from "./store/about_slice/adminSlice";
 
 const App = () => {
   const state = useSelector((state) => state.auth);
@@ -40,7 +41,11 @@ const App = () => {
   const dispatch = useDispatch();
 
   const handleGetLogedInUserData = () => {
-    dispatch(checkAuth());
+    dispatch(checkAuth()).then((data) => {
+      if (data?.payload?.isSuccess) {
+        dispatch(getLoggedAdminData());
+      }
+    });
   };
   useEffect(() => {
     handleGetLogedInUserData();

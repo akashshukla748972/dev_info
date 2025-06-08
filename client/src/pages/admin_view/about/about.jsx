@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import {
   Calendar,
@@ -10,11 +10,12 @@ import {
   Twitter,
 } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import PageHeading from "../../../components/admin_view/page_heading";
+import { checkAuth } from "../../../store/auth_slice/authSlice";
 
 const About = () => {
-  const { user } = useSelector((state) => state.auth);
+  const { admin } = useSelector((state) => state.admin);
 
   return (
     <motion.div
@@ -40,7 +41,7 @@ const About = () => {
             <div className="relative flex flex-col justify-center items-center w-fit">
               <img
                 src={
-                  user.avatar?.url ||
+                  admin.avatar?.url ||
                   "https://img.freepik.com/free-photo/fun-3d-cartoon-teenage-boy_183364-81073.jpg?ga=GA1.1.153015461.1743153162&semt=ais_items_boosted&w=740"
                 }
                 alt=""
@@ -55,7 +56,7 @@ const About = () => {
             </div>
             <div className="text-center space-y-2">
               <h2 className="text-xl font-semibold">
-                {user.name.slice(0, 12)}..
+                {admin.name.slice(0, 12)}..
               </h2>
               <p className="">Designer</p>
             </div>
@@ -69,7 +70,7 @@ const About = () => {
                 <Mail />
                 <span className="">Email</span>
               </div>
-              <div className="">{user.email}</div>
+              <div className="">{admin.email}</div>
             </div>
             <div className="">
               <div className="flex">
