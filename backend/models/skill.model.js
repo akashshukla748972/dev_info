@@ -11,6 +11,7 @@ const skillSchema = new Schema(
       type: String,
       enum: ["Beginner", "Intermediate", "Advanced", "Expert"],
       default: "Beginner",
+      required: true,
     },
     category: {
       type: String,
@@ -31,10 +32,15 @@ const skillSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "admin",
     },
+    isActive: {
+      type: Boolean,
+      default: true,
+    },
   },
   {
     timestamps: true,
   }
 );
 
-export default model("Skill", skillSchema);
+const skillModel = model("skill", skillSchema);
+export default skillModel;

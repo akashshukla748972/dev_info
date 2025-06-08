@@ -10,6 +10,7 @@ import adminRouter from "./routes/admin/admin.router.js";
 import authRouter from "./routes/auth/auth.routes.js";
 import CustomError from "./utils/CustomError.js";
 import projectRouter from "./routes/project/project.routes.js";
+import skillRouter from "./routes/skill/skill.routes.js";
 
 const app = express();
 
@@ -37,6 +38,7 @@ connectToCloudinary();
 app.use("/api/auth", authRouter);
 app.use("/api/admin", adminRouter);
 app.use("/api/projects", projectRouter);
+app.use("/api/skills", skillRouter);
 app.use((req, res, next) => {
   next(new CustomError("Page not found, Try again.", 404));
 });
