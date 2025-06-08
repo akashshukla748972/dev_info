@@ -15,6 +15,14 @@ const adminSchema = new Schema(
       type: String,
       default: null,
     },
+    bio: {
+      type: String,
+      default: null,
+    },
+    address: {
+      type: String,
+      default: null,
+    },
     password: { type: String, required: true },
     avatar: {
       public_id: {

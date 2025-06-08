@@ -65,7 +65,7 @@ export const handleCreateProject = async (req, res, next) => {
     }
     const cloudinaryResponse = await uploadAvatarInCloudinary(
       file,
-      "/admin/projects/poster"
+      "def_info/admin/projects/poster"
     );
 
     if (cloudinaryResponse.isError) {

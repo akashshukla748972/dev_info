@@ -71,3 +71,33 @@ export const handleUpdateProfilePhoto = async (req, res, next) => {
     return next(new CustomError("Internal server error, Try again.", 500));
   }
 };
+
+export const handleUpdateProfileDetails = async (req, res, next) => {
+  try {
+    const { id } = req.user;
+    const data = req.body;
+
+    const updatedDate = await adminModel.findByIdAndUpdate(
+      id,
+      {
+        name: data?.name,
+        email: data?.email,
+        phone: data?.phone,
+        bio: data?.bio,
+        address: data?.address,
+      },
+      { new: true }
+    );
+
+    console.log(updatedDate);
+    return res.status(200).json({
+      message: "Profile details updated successfully.",
+      isSuccess: true,
+      isError: false,
+      data: updatedDate,
+    });
+  } catch (error) {
+    console.error(`Error while updating profile details: ${error}`);
+    return next(new CustomError("Internal server error, Try again.", 500));
+  }
+};
