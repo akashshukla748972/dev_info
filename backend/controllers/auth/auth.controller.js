@@ -47,6 +47,7 @@ export const handleCreateUser = async (req, res, next) => {
       id: newAdmin._id,
       name: newAdmin.name,
       email: newAdmin.email,
+      role: newAdmin.role,
     };
     const token = await getToken(payLoad);
 
@@ -102,6 +103,7 @@ export const handleLoginUser = async (req, res, next) => {
       id: user._id,
       name: user.name,
       email: user.email,
+      role: user.role,
     };
     const token = await getToken(payLoad);
 
