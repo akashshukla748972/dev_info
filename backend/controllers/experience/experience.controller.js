@@ -63,7 +63,30 @@ export const handleCreateExperience = async (req, res, next) => {
       isError: false,
     });
   } catch (error) {
-    console.error("Error while updating skill:", error);
+    console.error("Error while creating experience:", error);
+    return next(new CustomError("Internal server error", 500));
+  }
+};
+
+export const handleGetAllExperience = async (req, res, next) => {
+  try {
+    const { id } = req.user;
+    const allExperience = await experienceModel.find({
+      createdBy: id,
+      isActive: true,
+    });
+    if (allExperience.length == 0) {
+      return next(new CustomError("Experience not found.", 404));
+    }
+
+    return res.status(200).json({
+      message: "Getting all experience successfully",
+      data: allExperience,
+      isSuccess: true,
+      isError: false,
+    });
+  } catch (error) {
+    console.error("Error while getting all experience:", error);
     return next(new CustomError("Internal server error", 500));
   }
 };
