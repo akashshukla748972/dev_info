@@ -11,6 +11,7 @@ import authRouter from "./routes/auth/auth.routes.js";
 import CustomError from "./utils/CustomError.js";
 import projectRouter from "./routes/project/project.routes.js";
 import skillRouter from "./routes/skill/skill.routes.js";
+import experienceRouter from "./routes/experience/experience.routes.js";
 
 const app = express();
 
@@ -39,6 +40,7 @@ app.use("/api/auth", authRouter);
 app.use("/api/admin", adminRouter);
 app.use("/api/projects", projectRouter);
 app.use("/api/skills", skillRouter);
+app.use("/api/experiences", experienceRouter);
 app.use((req, res, next) => {
   next(new CustomError("Page not found, Try again.", 404));
 });

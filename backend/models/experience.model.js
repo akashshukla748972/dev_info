@@ -28,6 +28,7 @@ const experienceSchema = new mongoose.Schema(
     },
     endDate: {
       type: Date,
+      default: null,
     },
     isCurrent: {
       type: Boolean,
@@ -51,7 +52,7 @@ const experienceSchema = new mongoose.Schema(
     },
     isActive: {
       type: Boolean,
-      default: false,
+      default: true,
     },
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
