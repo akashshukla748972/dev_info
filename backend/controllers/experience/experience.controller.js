@@ -90,3 +90,74 @@ export const handleGetAllExperience = async (req, res, next) => {
     return next(new CustomError("Internal server error", 500));
   }
 };
+
+export const handleDeleteExperience = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    const deletedExperience = await experienceModel.findByIdAndDelete(id);
+    if (!deletedExperience) {
+      return next(new CustomError("Experience not found.", 404));
+    }
+
+    return res.status(200).json({
+      message: "Experience deleted successfully",
+      data: deletedExperience,
+      isSuccess: true,
+      isError: false,
+    });
+  } catch (error) {
+    console.error("Error while getting all experience:", error);
+    return next(new CustomError("Internal server error", 500));
+  }
+};
+
+export const handleUpdateExperience = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const userId = req.user.id;
+
+    const {
+      title,
+      company,
+      location,
+      description,
+      startDate,
+      endDate,
+      technologies,
+      logo,
+      isActive,
+    } = req.body;
+
+    const updateFields = {};
+    if (title) updateFields.title = title.trim();
+    if (company) updateFields.company = company.trim();
+    if (location) updateFields.location = location.trim();
+    if (description) updateFields.description = description.trim();
+    if (startDate) updateFields.startDate = new Date(startDate);
+    if (endDate) updateFields.endDate = new Date(endDate);
+    if (technologies) updateFields.technologies = technologies;
+    if (logo) updateFields.logo = logo;
+    if (isActive) updateFields.isActive = isActive;
+    if (endDate) updateFields.isCurrent = false;
+
+    const updatedExperience = await experienceModel.findOneAndUpdate(
+      { _id: id, createdBy: userId },
+      updateFields,
+      { new: true }
+    );
+    if (!updatedExperience) {
+      return next(new CustomError("Experience not found.", 404));
+    }
+
+    return res.status(200).json({
+      message: "Experience deleted successfully",
+      data: updatedExperience,
+      isSuccess: true,
+      isError: false,
+    });
+  } catch (error) {
+    console.error("Error while getting all experience:", error);
+    return next(new CustomError("Internal server error", 500));
+  }
+};
