@@ -1,8 +1,8 @@
-import mongoose from "mongoose";
+import { Schema, model } from "mongoose";
 
-const educationSchema = new mongoose.Schema(
+const educationSchema = new Schema(
   {
-    degree: {
+    title: {
       type: String,
       required: true,
       trim: true,
@@ -46,7 +46,7 @@ const educationSchema = new mongoose.Schema(
       },
     },
     createdBy: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: "admin",
       required: true,
     },
