@@ -12,7 +12,8 @@ import CustomError from "./utils/CustomError.js";
 import projectRouter from "./routes/project/project.routes.js";
 import skillRouter from "./routes/skill/skill.routes.js";
 import experienceRouter from "./routes/experience/experience.routes.js";
-import educationRouter from "./routes/education/education.routes.js"
+import educationRouter from "./routes/education/education.routes.js";
+import testimonialRouter from "./routes/testimonial/testimonial.routes.js";
 
 const app = express();
 
@@ -43,6 +44,7 @@ app.use("/api/projects", projectRouter);
 app.use("/api/skills", skillRouter);
 app.use("/api/experiences", experienceRouter);
 app.use("/api/educations", educationRouter);
+app.use("/api/testimonials", testimonialRouter);
 app.use((req, res, next) => {
   next(new CustomError("Page not found, Try again.", 404));
 });

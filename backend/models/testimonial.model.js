@@ -38,7 +38,7 @@ const testimonialSchema = new Schema(
       },
     },
     project: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: "Project",
       default: null,
     },
