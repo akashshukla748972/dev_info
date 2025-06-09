@@ -35,7 +35,7 @@ export const sidebarItem = [
     name: "Projects",
     icon: Layers,
     color: "#3b82f6",
-    href: "/admin/projects",
+    href: "/admin/projects/all",
   },
   {
     name: "Experience",

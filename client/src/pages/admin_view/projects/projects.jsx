@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import PageHeading from "../../../components/admin_view/page_heading";
-import { Link } from "react-router-dom";
+import { Link, NavLink, useParams } from "react-router-dom";
 import {
   CircleCheckBig,
   CircleDotDashed,
@@ -16,8 +16,8 @@ import toast from "react-hot-toast";
 const Projects = () => {
   const { projects } = useSelector((state) => state.projects);
   const dispatch = useDispatch();
-
-  console.log(projects);
+  const { filterBy } = useParams();
+  const [filterData, setFilterData] = useState(null);
 
   const handleGetAllProject = () => {
     dispatch(getAllProject());
@@ -25,7 +25,21 @@ const Projects = () => {
 
   useEffect(() => {
     handleGetAllProject();
-  }, [dispatch]);
+  }, []);
+
+  useEffect(() => {
+    const normalizedFilter = filterBy?.toLowerCase();
+    if (normalizedFilter !== "all") {
+      const capitalizedFilter =
+        normalizedFilter?.charAt(0).toUpperCase() + normalizedFilter?.slice(1);
+      const filtered = projects?.filter(
+        (item) => item.status === capitalizedFilter
+      );
+      setFilterData(filtered);
+    } else {
+      setFilterData(projects);
+    }
+  }, [projects, filterBy]);
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -38,16 +52,37 @@ const Projects = () => {
 
       <div className="bg-gray-800 p-6 flex justify-between rounded-full">
         <div className="flex space-x-6">
-          <Link className="flex items-center gap-3">
-            <CircleDotDashed color="#f1e9e9" /> All
-          </Link>
-          <Link className="flex items-center  gap-3">
-            <Info /> Doing
-          </Link>
-          <Link className="flex items-center  gap-3">
-            <CircleCheckBig color="#f1e9e9" />
-            Done
-          </Link>
+          <NavLink
+            to={"/admin/projects/all"}
+            className={({ isActive }) =>
+              `${
+                isActive ? "text-green-500" : "text-[#f1e9e9]"
+              } flex items-center gap-3`
+            }
+          >
+            <CircleDotDashed /> All
+          </NavLink>
+          <NavLink
+            to={"/admin/projects/pending"}
+            className={({ isActive }) =>
+              `${
+                isActive ? "text-green-500" : "text-[#f1e9e9]"
+              } flex items-center gap-3`
+            }
+          >
+            <Info /> Pending
+          </NavLink>
+          <NavLink
+            to={"/admin/projects/fulfilled"}
+            className={({ isActive }) =>
+              `${
+                isActive ? "text-green-500" : "text-[#f1e9e9]"
+              } flex items-center gap-3`
+            }
+          >
+            <CircleCheckBig />
+            Fulfilled
+          </NavLink>
         </div>
         <Link
           to={"/admin/projects/create"}
@@ -58,8 +93,10 @@ const Projects = () => {
       </div>
 
       <div className="p-4  grid grid-cols-3 gap-4">
-        {projects &&
-          projects.map((item) => <ProjectCard key={item.title} data={item} />)}
+        {filterData &&
+          filterData.map((item) => (
+            <ProjectCard key={item.title} data={item} />
+          ))}
       </div>
     </motion.div>
   );

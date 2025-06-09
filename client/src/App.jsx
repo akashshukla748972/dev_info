@@ -94,8 +94,8 @@ const App = () => {
           </Route>
           <Route path="skills" element={<Skills />} />
           <Route path="projects" element={<ProjectLayout />}>
-            <Route index element={<Projects />} />
             <Route path="create" element={<CreateProject />} />
+            <Route path=":filterBy" element={<Projects />} />
           </Route>
           <Route path="experiences" element={<Experience />} />
           <Route path="educations" element={<Education />} />
