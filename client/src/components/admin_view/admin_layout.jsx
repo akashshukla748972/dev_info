@@ -10,6 +10,7 @@ const AdminLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const dispatch = useDispatch();
   useEffect(() => {
+    document.title = "DEVINGO | DASHBOARD";
     dispatch(getLoggedAdminData());
   }, []);
   return (
