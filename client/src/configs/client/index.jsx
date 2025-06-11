@@ -2,13 +2,8 @@ import {
   User,
   Layers,
   Briefcase,
-  GraduationCap,
-  Settings,
-  MessageCircle,
   FileText,
-  LogOut,
   Star,
-  Wrench,
   Globe,
   Home,
 } from "lucide-react";
@@ -30,7 +25,7 @@ export const topNavbarItem = [
     name: "Projects",
     icon: Layers,
     color: "#3b82f6",
-    href: "/user/projects/all",
+    href: "/user/projects",
   },
   {
     name: "Experience",
@@ -51,15 +46,9 @@ export const topNavbarItem = [
     href: "/user/testimonials",
   },
   {
-    name: "Blog",
+    name: "Blogs",
     icon: FileText,
     color: "#14b8a6",
     href: "/user/blogs",
-  },
-  {
-    name: "Logout",
-    icon: LogOut,
-    color: "#ef4444",
-    href: "/user/logout",
   },
 ];

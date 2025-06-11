@@ -3,12 +3,12 @@ import { topNavbarItem } from "../../configs/client";
 import { NavLink } from "react-router-dom";
 import { Menu, Moon, Sun, X } from "lucide-react";
 import { motion } from "framer-motion";
-const TopNavbar = () => {
+const TopNavbar = ({ scrollContainerRef }) => {
   const [sticky, setSticky] = useState(false);
   const [theme, setTheme] = useState(
     localStorage.getItem("theme") ? localStorage.getItem("theme") : "dark"
   );
-  console.log("theme->", theme);
+  console.log("sticky->", sticky);
   const [samllDeviceNavbar, setSamllDeviceNavbar] = useState(false);
 
   const element = document.documentElement;
@@ -24,6 +24,7 @@ const TopNavbar = () => {
 
   useEffect(() => {
     const handleScroll = () => {
+      console.log("ScrollY:", window.scrollY);
       if (window.scrollY > 0) {
         setSticky(true);
       } else {
@@ -34,12 +35,10 @@ const TopNavbar = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
   return (
     <div
-      className={`max-w-full container mx-auto mb-20 px-2 md:px-4 fixed top-0 right-0 left-0 z-50 bg-gray-100 dark:bg-gray-800 ${
-        sticky &&
-        "sticky-navbar shadow-md bg-gray-100 dark:bg-gray-800 duration-300 transition-all ease-in-out"
-      } `}
+      className={`fixed top-0 right-0 left-0 z-50 max-w-full container mx-auto px-2 md:px-4 shadow-md bg-gray-100 dark:bg-transparent backdrop-blur-2xl`}
     >
       <div className="flex flex-1 items-center py-4 justify-between">
         <div className="flex items-center text-xl relative">

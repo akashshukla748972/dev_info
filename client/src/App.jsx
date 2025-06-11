@@ -28,6 +28,12 @@ import About from "./pages/admin_view/about/about";
 import EditProfile from "./pages/admin_view/about/edit_user";
 import DashboardLayout from "./components/admin_view/dashboard/dashboard_layout";
 import AdminView from "./pages/admin_view/dashboard";
+import AboutUser from "./pages/client_view/about/about_me";
+import ProjectUser from "./pages/client_view/project/project";
+import ExperienceUser from "./pages/client_view/experience/experience";
+import ServiceUser from "./pages/client_view/service/service";
+import BlogUser from "./pages/client_view/blog/blog";
+import TestimonialsUser from "./pages/client_view/testimonials/testimonials";
 
 const App = () => {
   const state = useSelector((state) => state.auth);
@@ -76,6 +82,12 @@ const App = () => {
           }
         >
           <Route path="home" element={<ClientView />} />
+          <Route path="about" element={<AboutUser />} />
+          <Route path="projects" element={<ProjectUser />} />
+          <Route path="experiences" element={<ExperienceUser />} />
+          <Route path="testimonials" element={<TestimonialsUser />} />
+          <Route path="services" element={<ServiceUser />} />
+          <Route path="blogs" element={<BlogUser />} />
         </Route>
         <Route
           path="/admin"
