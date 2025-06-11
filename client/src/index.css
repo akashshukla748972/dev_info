@@ -3,3 +3,7 @@
 .hiddenScrollbar::-webkit-scrollbar{
     display: none;
 }
+
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
