@@ -18,7 +18,6 @@ import ProjectLayout from "./components/admin_view/project/project_layout";
 import CreateProject from "./pages/admin_view/projects/create_project";
 import { useSelector, useDispatch } from "react-redux";
 import { checkAuth } from "./store/auth_slice/authSlice";
-import toast, { Toaster } from "react-hot-toast";
 import AuthLayout from "./components/auth/auth_layout";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/register";
@@ -34,6 +33,7 @@ import ExperienceUser from "./pages/client_view/experience/experience";
 import ServiceUser from "./pages/client_view/service/service";
 import BlogUser from "./pages/client_view/blog/blog";
 import TestimonialsUser from "./pages/client_view/testimonials/testimonials";
+import {ToastContainer} from "react-toastify"
 
 const App = () => {
   const state = useSelector((state) => state.auth);
@@ -119,7 +119,7 @@ const App = () => {
           <Route path="logout" element={<Logout />} />
         </Route>
       </Routes>
-      <Toaster />
+      <ToastContainer />
     </div>
   );
 };

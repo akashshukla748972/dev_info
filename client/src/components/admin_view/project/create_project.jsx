@@ -5,7 +5,7 @@ import { CloudUpload, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { createProject } from "../../../store/project_slice/projectSlice";
-import { toast } from "react-hot-toast";
+import { toast } from "react-toastify";
 import { Navigate } from "react-router-dom";
 
 const CreateProjectForm = () => {

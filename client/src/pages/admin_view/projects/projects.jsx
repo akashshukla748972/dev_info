@@ -11,7 +11,6 @@ import {
 import ProjectCard from "../../../components/admin_view/project_card";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProject } from "../../../store/project_slice/projectSlice";
-import toast from "react-hot-toast";
 
 const Projects = () => {
   const { projects } = useSelector((state) => state.projects);

@@ -10,7 +10,7 @@ export const registerUser = createAsyncThunk(
     } catch (error) {
       const message = error.response?.data?.message || error.message;
       console.error(message);
-      return rejectWithValue(message);
+      return rejectWithValue(error.response?.data);
     }
   }
 );
@@ -25,7 +25,7 @@ export const loginUser = createAsyncThunk(
       console.log(error);
       const message = error.response?.data?.message || error.message;
       console.error(message);
-      return rejectWithValue(message);
+      return rejectWithValue(error.response?.data);
     }
   }
 );

@@ -2,7 +2,7 @@ import React from "react";
 import LogoutCard from "../../components/admin_view/logout/logout_card";
 import { useDispatch } from "react-redux";
 import { checkAuth, logoutUser } from "../../store/auth_slice/authSlice";
-import toast from "react-hot-toast";
+import { toast } from "react-toastify";
 
 const Logout = () => {
   const dispatch = useDispatch();

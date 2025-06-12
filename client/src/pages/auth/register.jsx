@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { checkAuth, registerUser } from "../../store/auth_slice/authSlice";
-import toast from "react-hot-toast";
+import { toast } from "react-toastify";
 
 const Register = () => {
   const {
@@ -18,13 +18,15 @@ const Register = () => {
 
   const handleRegisterUser = (data) => {
     dispatch(registerUser(data)).then((data) => {
-      if (data.error) {
-        toast.error(data.payload);
+      if (data.payload?.isError) {
+        toast.error(data.payload.message);
       } else {
         toast.success(
           data.payload?.message || "New user register successfully."
         );
-        dispatch(checkAuth());
+        setTimeout(() => {
+          dispatch(checkAuth());
+        }, 1000);
       }
     });
   };
