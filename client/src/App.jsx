@@ -33,7 +33,7 @@ import ExperienceUser from "./pages/client_view/experience/experience";
 import ServiceUser from "./pages/client_view/service/service";
 import BlogUser from "./pages/client_view/blog/blog";
 import TestimonialsUser from "./pages/client_view/testimonials/testimonials";
-import {ToastContainer} from "react-toastify"
+import { ToastContainer } from "react-toastify";
 
 const App = () => {
   const state = useSelector((state) => state.auth);
@@ -82,7 +82,7 @@ const App = () => {
           }
         >
           <Route path="home" element={<ClientView />} />
-          <Route path="about" element={<AboutUser />} />
+          <Route path="about-me" element={<AboutUser />} />
           <Route path="projects" element={<ProjectUser />} />
           <Route path="experiences" element={<ExperienceUser />} />
           <Route path="testimonials" element={<TestimonialsUser />} />

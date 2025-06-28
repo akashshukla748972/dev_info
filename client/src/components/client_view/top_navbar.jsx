@@ -36,6 +36,14 @@ const TopNavbar = ({ scrollContainerRef }) => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (samllDeviceNavbar) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+  }, [samllDeviceNavbar]);
+
   return (
     <div
       className={`fixed top-0 right-0 left-0 z-50 max-w-full container mx-auto px-2 md:px-4 shadow-md bg-gray-100 dark:bg-transparent backdrop-blur-2xl`}
@@ -50,8 +58,8 @@ const TopNavbar = ({ scrollContainerRef }) => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.3, delay: 0.4 }}
-              className={` fixed inset-0 right-40 top-[72px] px-4 pb-4 pt-2 bg-gradient-to-br from-gray-200 dark:from-gray-800 via-gray-100 dark:via-gray-900 to-gray-200 dark:to-gray-800 backdrop-blur-md transition-all duration-300 border-r border-r-gray-200`}
+              transition={{ duration: 0.3, delay: 0.2 }}
+              className="lg:hidden fixed top-[72px] left-0 right-0 bottom-0 z-[100] px-4 pb-4 pt-2 bg-white/30 dark:bg-black/30 backdrop-blur-md transition-all duration-300 border-r border-r-gray-200"
             >
               <div className="flex justify-end items-center my-2">
                 <span
@@ -68,7 +76,7 @@ const TopNavbar = ({ scrollContainerRef }) => {
                     to={item.href}
                     className={({ isActive }) =>
                       `${
-                        isActive ? "bg-gray-400 dark:bg-gray-700" : "bg-base"
+                        isActive ? "bg-gray-400 dark:bg-gray-700" : ""
                       } p-2 rounded-sm hover:bg-gray-400 dark:hover:bg-gray-700`
                     }
                   >
@@ -78,6 +86,7 @@ const TopNavbar = ({ scrollContainerRef }) => {
               </div>
             </motion.div>
           )}
+
           <h2 className="text-xl font-bold text-gray-800 dark:text-gray-200">
             <span className="bg-gray-800 dark:bg-gray-200 text-gray-200 dark:text-gray-800 px-2 font-bold rounded">
               DEV

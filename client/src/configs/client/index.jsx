@@ -6,6 +6,8 @@ import {
   Star,
   Globe,
   Home,
+  Images,
+  Mail,
 } from "lucide-react";
 
 export const topNavbarItem = [
@@ -19,7 +21,7 @@ export const topNavbarItem = [
     name: "About Me",
     icon: User,
     color: "#10b981",
-    href: "/user/about",
+    href: "/user/about-me",
   },
   {
     name: "Projects",
@@ -50,5 +52,46 @@ export const topNavbarItem = [
     icon: FileText,
     color: "#14b8a6",
     href: "/user/blogs",
+  },
+];
+
+export const sidebarItemClientView = [
+  {
+    name: "Home",
+    icon: Home,
+    color: "#6366f1",
+    href: "/admin/dashboard",
+  },
+  {
+    name: "About",
+    icon: User,
+    color: "#10b981",
+    href: "/admin/about",
+  },
+  {
+    name: "Resume",
+    icon: FileText,
+    color: "#f59e0b",
+    href: "/admin/skills",
+  },
+  {
+    name: "Portfolio",
+    icon: Images,
+    color: "#3b82f6",
+    href: "/admin/projects/all",
+  },
+
+  {
+    name: "Services",
+    icon: Globe,
+    color: "#06b6d4",
+    href: "/admin/services",
+  },
+
+  {
+    name: "Contact",
+    icon: Mail,
+    color: "#ef4444",
+    href: "/admin/logout",
   },
 ];
