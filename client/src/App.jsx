@@ -5,7 +5,7 @@ import { ToastContainer } from "react-toastify";
 import { checkAuth } from "./store/auth_slice/authSlice";
 import CheckAuth from "./components/common_view/CheckAuth.jsx";
 import AuthLayout from "./components/auth/AuthLayout.jsx";
-import Register from "./pages/auth/Register.jsx";
+import Signup from "./pages/auth/Signup.jsx";
 import Login from "./pages/auth/Login.jsx";
 import ClientLayout from "./components/client_view/ClientLayout.jsx";
 import ClientView from "./pages/client_view/ClientView.jsx";
@@ -69,7 +69,7 @@ const App = () => {
             </CheckAuth>
           }
         >
-          <Route path="register" element={<Register />} />
+          <Route path="register" element={<Signup />} />
           <Route path="login" element={<Login />} />
         </Route>
         <Route

@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { checkAuth, registerUser } from "../../store/auth_slice/authSlice";
 import { toast } from "react-toastify";
 
-const Register = () => {
+const Signup = () => {
   const {
     register,
     handleSubmit,
@@ -98,4 +98,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Signup;
