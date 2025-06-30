@@ -3,7 +3,8 @@ dotenv.config();
 
 const global_variable = {
   port: process.env.PORT,
-  mongo_uri: process.env.MONGO_URI,
+  mongo_user: process.env.MONGODB_USER,
+  mongo_password: process.env.MONGODB_PASSWORD,
   jwt_secret: process.env.JWT_SECRET,
   cloud_name: process.env.CLOUD_NAME,
   cloud_api_key: process.env.CLOUD_API_KEY,
