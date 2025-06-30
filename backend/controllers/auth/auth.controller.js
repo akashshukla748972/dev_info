@@ -55,6 +55,7 @@ export const handleCreateUser = async (req, res, next) => {
       httpOnly: true,
       secure: true,
       sameSite: "strict",
+      maxAge: 24 * 60 * 60 * 1000,
     });
 
     res.status(201).json({
@@ -111,6 +112,7 @@ export const handleLoginUser = async (req, res, next) => {
       httpOnly: true,
       secure: true,
       sameSite: "strict",
+      maxAge: 24 * 60 * 60 * 1000,
     });
 
     return res.status(200).json({
