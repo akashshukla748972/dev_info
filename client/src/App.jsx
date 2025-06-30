@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
-import ClientView from "./pages/client_view/Index.jsx";
+import ClientView from "./pages/client_view/ClientView.jsx";
 import CheckAuth from "./components/common_view/CheckAuth.jsx";
 import ClientLayout from "./components/client_view/ClientLayout.jsx";
 import AdminLayout from "./components/admin_view/AdminLayout.jsx";
