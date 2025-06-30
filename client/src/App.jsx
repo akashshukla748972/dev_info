@@ -1,3 +1,4 @@
+import { useSelector, useDispatch } from "react-redux";
 import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import ClientView from "./pages/client_view/Index.jsx";
@@ -16,7 +17,6 @@ import Setting from "./pages/admin_view/Setting.jsx";
 import Logout from "./pages/admin_view/Logout.jsx";
 import ProjectLayout from "./components/admin_view/project/ProjectLayout.jsx";
 import CreateProject from "./pages/admin_view/projects/CreateProject.jsx";
-import { useSelector, useDispatch } from "react-redux.jsx";
 import { checkAuth } from "./store/auth_slice/authSlice.jsx";
 import AuthLayout from "./components/auth/AuthLayout.jsx";
 import Login from "./pages/auth/Login.jsx";
