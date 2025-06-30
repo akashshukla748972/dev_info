@@ -1,8 +1,8 @@
 import React from "react";
 import { motion } from "framer-motion";
-import PageHeading from "../../../components/admin_view/page_heading";
-import StateCard from "../../../components/admin_view/dashboard/state_card";
-import MessageCard from "../../../components/admin_view/dashboard/message_card";
+import PageHeading from "../../../components/admin_view/PageHeading";
+import StateCard from "../../../components/admin_view/dashboard/StateCard";
+import MessageCard from "../../../components/admin_view/dashboard/MessageCard";
 import { Link } from "react-router-dom";
 import { Plus } from "lucide-react";
 

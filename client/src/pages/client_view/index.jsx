@@ -2,7 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { TypeAnimation } from "react-type-animation";
 import Logo from "../../../public/logo.png";
-import MainSection from "./home/main";
+import MainSection from "./home/MainSection";
 
 const ClientView = () => {
   document.title = "DEVINFO | HOME";

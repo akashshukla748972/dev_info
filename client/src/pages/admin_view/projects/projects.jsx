@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import PageHeading from "../../../components/admin_view/page_heading";
+import PageHeading from "../../../components/admin_view/PageHeading";
 import { Link, NavLink, useParams } from "react-router-dom";
 import {
   CircleCheckBig,
@@ -8,7 +8,7 @@ import {
   Info,
   SquarePlus,
 } from "lucide-react";
-import ProjectCard from "../../../components/admin_view/project_card";
+import ProjectCard from "../../../components/admin_view/ProjectCard";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProject } from "../../../store/project_slice/projectSlice";
 

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
-import Sidebar from "./sidebar";
-import AdminHeader from "./admin_header";
-import AdminFooter from "./admin_footer";
+import Sidebar from "./Sidebar";
+import AdminHeader from "./AdminHeader";
+import AdminFooter from "./AdminFooter";
 import { useDispatch } from "react-redux";
 import { getLoggedAdminData } from "../../store/about_slice/adminSlice";
 

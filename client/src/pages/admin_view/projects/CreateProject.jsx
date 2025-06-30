@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
-import PageHeading from "../../../components/admin_view/page_heading";
-import CreateProjectForm from "../../../components/admin_view/project/create_project";
+import PageHeading from "../../../components/admin_view/PageHeading";
+import CreateProjectForm from "../../../components/admin_view/project/CreateProjectForm";
 
 const CreateProject = () => {
   return (

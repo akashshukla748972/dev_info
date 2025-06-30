@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { motion } from "framer-motion";
-import PageHeading from "../../../components/admin_view/page_heading";
+import PageHeading from "../../../components/admin_view/PageHeading";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { CloudUpload, X } from "lucide-react";

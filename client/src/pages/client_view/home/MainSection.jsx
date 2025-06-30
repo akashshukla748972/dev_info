@@ -1,5 +1,5 @@
-import ProjectCard from "../../../components/client_view/home/project_card";
-import SearchComponent from "../../../components/client_view/common/search";
+import ProjectCard from "../../../components/client_view/home/ProjectCard";
+import SearchComponent from "../../../components/client_view/common/SearchComponent";
 import { motion } from "framer-motion";
 
 const MainSection = () => {

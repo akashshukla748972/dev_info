@@ -1,5 +1,5 @@
 import React from "react";
-import LogoutCard from "../../components/admin_view/logout/logout_card";
+import LogoutCard from "../../components/admin_view/logout/LogoutCard";
 import { useDispatch } from "react-redux";
 import { checkAuth, logoutUser } from "../../store/auth_slice/authSlice";
 import { toast } from "react-toastify";

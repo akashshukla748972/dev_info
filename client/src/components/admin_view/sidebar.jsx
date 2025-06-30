@@ -2,7 +2,7 @@ import React from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu } from "lucide-react";
 
-import { sidebarItem } from "../../configs/admin/";
+import { sidebarItem } from "../../configs/admin";
 import { NavLink } from "react-router-dom";
 
 const Sidebar = ({ openSidebar, setOpenSidebar }) => {

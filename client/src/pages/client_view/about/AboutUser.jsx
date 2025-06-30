@@ -1,8 +1,8 @@
 import React from "react";
-import SideNav from "../../../components/client_view/about/side_nav";
+import SideNav from "../../../components/client_view/about/SideNav";
 import { motion } from "framer-motion";
 import { TypeAnimation } from "react-type-animation";
-import SeekBar from "../../../components/client_view/about/seek_var";
+import SeekBar from "../../../components/client_view/about/SeekBar";
 
 const AboutUser = () => {
   return (

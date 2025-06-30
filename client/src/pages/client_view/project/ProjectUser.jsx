@@ -1,5 +1,5 @@
 import React from "react";
-import SearchComponent from "../../../components/client_view/common/search";
+import SearchComponent from "../../../components/client_view/common/SearchComponent";
 
 const ProjectUser = () => {
   return (
