@@ -2,7 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { TypeAnimation } from "react-type-animation";
 import Logo from "../../../public/logo.png";
-import SearchUser from "./home/search";
+import MainSection from "./home/main";
 
 const ClientView = () => {
   document.title = "DEVINFO | HOME";
@@ -19,7 +19,7 @@ const ClientView = () => {
           <h1 className="text-2xl lg:text-5xl font-bold text-gray-900 dark:text-gray-100">
             DEVINFO TECH SOLUTIONS
           </h1>
-          <p className="text-[8px] sm:text-[10px] md:text-[12px] lg:text-[14px] md:text-sm dark:text-gray-100  text-gray-900">
+          <p className="text-[7px] sm:text-[10px] md:text-[12px] lg:text-[14px] md:text-sm dark:text-gray-100  text-gray-900">
             <TypeAnimation
               sequence={[
                 "Website Designing (HTML, CSS, JS, React, Tailwind, etc.)",
@@ -60,7 +60,7 @@ const ClientView = () => {
         transition={{ duration: 0.3, delay: 0.4 }}
       >
         <div className="p-4 md:p-6 lg:p-10">
-          <SearchUser />
+          <MainSection />
         </div>
       </motion.section>
     </div>
