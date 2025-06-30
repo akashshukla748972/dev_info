@@ -17,7 +17,7 @@ import Setting from "./pages/admin_view/Setting.jsx";
 import Logout from "./pages/admin_view/Logout.jsx";
 import ProjectLayout from "./components/admin_view/project/ProjectLayout.jsx";
 import CreateProject from "./pages/admin_view/projects/CreateProject.jsx";
-import { checkAuth } from "./store/auth_slice/authSlice.jsx";
+import { checkAuth } from "./store/auth_slice/authSlice";
 import AuthLayout from "./components/auth/AuthLayout.jsx";
 import Login from "./pages/auth/Login.jsx";
 import Register from "./pages/auth/Register.jsx";
