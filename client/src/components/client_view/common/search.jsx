@@ -30,17 +30,17 @@ const SearchComponent = () => {
       <div className="">
         <form action="">
           <div className="flex relative justify-between pl-6 pr-2 py-1 items-center rounded-full border space-x-4 max-w-xl md:min-w-3xl lg:min-w-5xl">
-            <div className="flex space-x-4 items-center">
+            <div className="w-full flex space-x-4 items-center">
               <span className="">
                 <Search />
               </span>
               <input
                 type="text"
-                className="border-none outline-none"
+                className="border-none outline-none w-full"
                 placeholder="Search project by name"
               />
             </div>
-            <button className="px-6 py-3 bg-gray-800 text-gray-200 dark:bg-gray-200 dark:text-gray-800 rounded-full">
+            <button className="px-6 py-3 bg-gray-800 text-gray-200 dark:bg-gray-200 dark:text-gray-800 rounded-full cursor-pointer">
               Search
             </button>
           </div>

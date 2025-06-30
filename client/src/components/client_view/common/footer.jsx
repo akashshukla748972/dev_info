@@ -87,7 +87,7 @@ const FooterUser = () => {
                 className="w-full bg-transparent px-4 py-2 outline-none"
                 placeholder="Your Email"
               />
-              <button className=" bg-orange-500 dark:bg-orange-800 text-gray-100 font-semibold px-4 md:px-6 lg:px-10 py-2">
+              <button className=" bg-orange-500 dark:bg-orange-800 text-gray-100 font-semibold px-4 md:px-6 lg:px-10 py-2 cursor-pointer">
                 Subscribe
               </button>
             </div>
