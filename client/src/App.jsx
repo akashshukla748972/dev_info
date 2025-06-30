@@ -6,7 +6,7 @@ import CheckAuth from "./components/common_view/CheckAuth.jsx";
 import ClientLayout from "./components/client_view/ClientLayout.jsx";
 import AdminLayout from "./components/admin_view/AdminLayout.jsx";
 import Skills from "./pages/admin_view/Skill.jsx";
-import Projects from "./pages/admin_view/projects/Projects.jsx";
+import ProjectView from "./pages/admin_view/projects/ProjectView.jsx";
 import Experience from "./pages/admin_view/Experience.jsx";
 import Education from "./pages/admin_view/Education.jsx";
 import Service from "./pages/admin_view/Service.jsx";

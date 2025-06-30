@@ -12,7 +12,7 @@ import ProjectCard from "../../../components/admin_view/ProjectCard";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProject } from "../../../store/project_slice/projectSlice";
 
-const Projects = () => {
+const ProjectView = () => {
   const { projects } = useSelector((state) => state.projects);
   const dispatch = useDispatch();
   const { filterBy } = useParams();
@@ -101,4 +101,4 @@ const Projects = () => {
   );
 };
 
-export default Projects;
+export default ProjectView;
