@@ -1,11 +1,29 @@
 import { useSelector, useDispatch } from "react-redux";
 import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
-import ClientView from "./pages/client_view/ClientView.jsx";
+import { ToastContainer } from "react-toastify";
+import { checkAuth } from "./store/auth_slice/authSlice";
 import CheckAuth from "./components/common_view/CheckAuth.jsx";
+import AuthLayout from "./components/auth/AuthLayout.jsx";
+import Register from "./pages/auth/Register.jsx";
+import Login from "./pages/auth/Login.jsx";
 import ClientLayout from "./components/client_view/ClientLayout.jsx";
+import ClientView from "./pages/client_view/ClientView.jsx";
+import AboutUser from "./pages/client_view/about/AboutUser.jsx";
+import ProjectUser from "./pages/client_view/project/ProjectUser.jsx";
+import ExperienceUser from "./pages/client_view/experience/ExperienceUser.jsx";
+import TestimonialsUser from "./pages/client_view/testimonials/TestimonialsUser.jsx";
+import ServiceUser from "./pages/client_view/service/ServiceUser.jsx";
+import BlogUser from "./pages/client_view/blog/BlogUser.jsx";
 import AdminLayout from "./components/admin_view/AdminLayout.jsx";
-import Skills from "./pages/admin_view/Skill.jsx";
+import DashboardLayout from "./components/admin_view/dashboard/DashboardLayout.jsx";
+import AdminView from "./pages/admin_view/dashboard/AdminView.jsx";
+import AboutLayout from "./components/admin_view/about/AboutLayout.jsx";
+import About from "./pages/admin_view/about/About.jsx";
+import EditProfile from "./pages/admin_view/about/EditProfile.jsx";
+import Skills from "./pages/admin_view/SkillsView.jsx";
+import ProjectLayout from "./components/admin_view/project/ProjectLayout.jsx";
+import CreateProject from "./pages/admin_view/projects/CreateProject.jsx";
 import ProjectView from "./pages/admin_view/projects/ProjectView.jsx";
 import Experience from "./pages/admin_view/Experience.jsx";
 import Education from "./pages/admin_view/Education.jsx";
@@ -15,25 +33,6 @@ import Blog from "./pages/admin_view/Blog.jsx";
 import Message from "./pages/admin_view/Message.jsx";
 import Setting from "./pages/admin_view/Setting.jsx";
 import Logout from "./pages/admin_view/Logout.jsx";
-import ProjectLayout from "./components/admin_view/project/ProjectLayout.jsx";
-import CreateProject from "./pages/admin_view/projects/CreateProject.jsx";
-import { checkAuth } from "./store/auth_slice/authSlice";
-import AuthLayout from "./components/auth/AuthLayout.jsx";
-import Login from "./pages/auth/Login.jsx";
-import Register from "./pages/auth/Register.jsx";
-import Loader from "./pages/common_view/loader.jsx";
-import AboutLayout from "./components/admin_view/about/AboutLayout.jsx";
-import About from "./pages/admin_view/about/About.jsx";
-import EditProfile from "./pages/admin_view/about/EditProfile.jsx";
-import DashboardLayout from "./components/admin_view/dashboard/DashboardLayout.jsx";
-import AdminView from "./pages/admin_view/dashboard/AdminView.jsx";
-import AboutUser from "./pages/client_view/about/AboutUser.jsx";
-import ProjectUser from "./pages/client_view/project/ProjectUser.jsx";
-import ExperienceUser from "./pages/client_view/experience/Experience.jsx";
-import ServiceUser from "./pages/client_view/service/ServiceUser.jsx";
-import BlogUser from "./pages/client_view/blog/Blog.jsx";
-import TestimonialsUser from "./pages/client_view/testimonials/TestimonialsUser.jsx";
-import { ToastContainer } from "react-toastify";
 
 const App = () => {
   const state = useSelector((state) => state.auth);
@@ -107,7 +106,7 @@ const App = () => {
           <Route path="skills" element={<Skills />} />
           <Route path="projects" element={<ProjectLayout />}>
             <Route path="create" element={<CreateProject />} />
-            <Route path=":filterBy" element={<Projects />} />
+            <Route path=":filterBy" element={<ProjectView />} />
           </Route>
           <Route path="experiences" element={<Experience />} />
           <Route path="educations" element={<Education />} />
