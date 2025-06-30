@@ -1,8 +1,6 @@
-import { Search } from "lucide-react";
-import React from "react";
-import { NavLink } from "react-router-dom";
 import ProjectCard from "../../../components/client_view/home/project_card";
 import SearchComponent from "../../../components/client_view/common/search";
+import { motion } from "framer-motion";
 
 const MainSection = () => {
   return (
@@ -14,7 +12,8 @@ const MainSection = () => {
         <h2 className="text-xl md:text-2xl font-semibold mb-6">
           Letest Projects
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10">
+          <ProjectCard />
           <ProjectCard />
           <ProjectCard />
           <ProjectCard />
