@@ -6,7 +6,6 @@ import { checkAuth } from "./store/auth_slice/authSlice";
 import CheckAuth from "./components/common_view/CheckAuth.jsx";
 import AuthLayout from "./components/auth/AuthLayout.jsx";
 import Signup from "./pages/auth/Signup.jsx";
-import LoginPage from "./pages/auth/LoginPage.jsx";
 import ClientLayout from "./components/client_view/ClientLayout.jsx";
 import ClientView from "./pages/client_view/ClientView.jsx";
 import AboutUser from "./pages/client_view/about/AboutUser.jsx";
@@ -34,6 +33,7 @@ import Message from "./pages/admin_view/Message.jsx";
 import Setting from "./pages/admin_view/Setting.jsx";
 import Logout from "./pages/admin_view/Logout.jsx";
 import Loader from "./pages/common_view/Loader.jsx";
+import LoginPage from "./pages/auth/LoginPage.jsx";
 
 const App = () => {
   const state = useSelector((state) => state.auth);
