@@ -6,7 +6,7 @@ import { checkAuth } from "./store/auth_slice/authSlice";
 import CheckAuth from "./components/common_view/CheckAuth.jsx";
 import AuthLayout from "./components/auth/AuthLayout.jsx";
 import Signup from "./pages/auth/Signup.jsx";
-import Login from "./pages/auth/Login.jsx";
+import LoginPage from "./pages/auth/LoginPage.jsx";
 import ClientLayout from "./components/client_view/ClientLayout.jsx";
 import ClientView from "./pages/client_view/ClientView.jsx";
 import AboutUser from "./pages/client_view/about/AboutUser.jsx";
@@ -71,7 +71,7 @@ const App = () => {
           }
         >
           <Route path="register" element={<Signup />} />
-          <Route path="login" element={<Login />} />
+          <Route path="login" element={<LoginPage />} />
         </Route>
         <Route
           path="/user"
