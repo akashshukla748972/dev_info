@@ -18,22 +18,10 @@ export const topNavbarItem = [
     href: "/user/home",
   },
   {
-    name: "About Me",
-    icon: User,
-    color: "#10b981",
-    href: "/user/about-me",
-  },
-  {
     name: "Projects",
     icon: Layers,
     color: "#3b82f6",
     href: "/user/projects",
-  },
-  {
-    name: "Experience",
-    icon: Briefcase,
-    color: "#8b5cf6",
-    href: "/user/experiences",
   },
   {
     name: "Services",
@@ -52,6 +40,18 @@ export const topNavbarItem = [
     icon: FileText,
     color: "#14b8a6",
     href: "/user/blogs",
+  },
+  {
+    name: "About",
+    icon: User,
+    color: "#10b981",
+    href: "/user/about-me",
+  },
+  {
+    name: "Contact Us",
+    icon: Briefcase,
+    color: "#8b5cf6",
+    href: "/user/contact",
   },
 ];
 

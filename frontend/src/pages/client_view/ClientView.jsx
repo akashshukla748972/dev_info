@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { TypeAnimation } from "react-type-animation";
 import Logo from "../../../public/logo.png";
 import MainSection from "./home/MainSection";
+import { Link } from "react-router-dom";
 
 const ClientView = () => {
   document.title = "DEVINFO | HOME";
@@ -15,34 +16,46 @@ const ClientView = () => {
         transition={{ duration: 0.3, delay: 0.4 }}
         className="h-[70vh] w-full grid grid-cols-1 lg:grid-cols-2 my-20"
       >
-        <div className="flex flex-col justify-center items-center">
-          <h1 className="text-2xl lg:text-5xl font-bold text-gray-900 dark:text-gray-100">
-            DEVINFO TECH SOLUTIONS
-          </h1>
-          <p className="text-[7px] sm:text-[10px] md:text-[12px] lg:text-[14px] md:text-sm dark:text-gray-100  text-gray-900">
-            <TypeAnimation
-              sequence={[
-                "Website Designing (HTML, CSS, JS, React, Tailwind, etc.)",
-                1000,
-                "Full Stack Web Development (MERN Stack)",
-                1000,
-                "E-commerce Website Development",
-                1000,
-                "Portfolio / Business Websites",
-                1000,
-                "Admin Panels & Dashboards",
-                1000,
-                "Responsive Design (Mobile Friendly Sites)",
-                1000,
-                "Web Hosting & Deployment",
-                1000,
-              ]}
-              wrapper="span"
-              speed={30}
-              style={{ fontSize: "2em", display: "inline-block" }}
-              repeat={Infinity}
-            />
-          </p>
+        <div className="flex flex-col justify-center items-center space-y-4">
+          <div className="flex flex-col justify-center items-center space-y-2">
+            <h1 className="text-2xl lg:text-5xl font-bold text-gray-900 dark:text-gray-100">
+              DEVINFO TECH SOLUTIONS
+            </h1>
+            <p className="text-[7px] sm:text-[8px] md:text-[9px] lg:text-[10px] dark:text-gray-100  text-gray-900">
+              <TypeAnimation
+                sequence={[
+                  "Website Designing (HTML, CSS, JS, React, Tailwind, etc.)",
+                  1000,
+                  "Full Stack Web Development (MERN Stack)",
+                  1000,
+                  "E-commerce Website Development",
+                  1000,
+                  "Portfolio / Business Websites",
+                  1000,
+                  "Admin Panels & Dashboards",
+                  1000,
+                  "Responsive Design (Mobile Friendly Sites)",
+                  1000,
+                  "Web Hosting & Deployment",
+                  1000,
+                ]}
+                wrapper="span"
+                speed={30}
+                style={{ fontSize: "2em", display: "inline-block" }}
+                repeat={Infinity}
+              />
+            </p>
+            <p className="text-center">
+              DEVINFO TECH SOLUTIONS is a growing IT company specializing in web
+              development, app development, and digital solutions. We aim to
+              deliver innovative, user-friendly, and result-driven technology
+              services that help businesses grow and succeed in the digital
+              world.
+            </p>
+          </div>
+          <div className="my-4">
+            <Link className="px-10 py-2 border-2 rounded-md">Contact Us</Link>
+          </div>
         </div>
         <div className="flex justify-center items-center">
           <img
