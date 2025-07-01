@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { topNavbarItem } from "../../configs/client";
 import { NavLink } from "react-router-dom";
 import { Menu, Moon, Sun, X } from "lucide-react";
-import { motion } from "framer-motion";
+import SmallDeviceSideNav from "./SmallDeviceSideNav";
 const TopNavbar = ({ scrollContainerRef }) => {
   const [sticky, setSticky] = useState(false);
   const [theme, setTheme] = useState(
@@ -53,39 +53,7 @@ const TopNavbar = ({ scrollContainerRef }) => {
           <div className="mr-2 sm:mr-4 lg:hidden hover:bg-gray-400 transition-colors duration-300 w-10 h-10 flex justify-center items-center rounded-full rel">
             {<Menu onClick={() => setSamllDeviceNavbar(!samllDeviceNavbar)} />}
           </div>
-          {samllDeviceNavbar && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3, delay: 0.2 }}
-              className="lg:hidden fixed top-[72px] left-0 right-0 bottom-0 z-[100] px-4 pb-4 pt-2 bg-white/30 dark:bg-black/30 backdrop-blur-md transition-all duration-300 border-r border-r-gray-200"
-            >
-              <div className="flex justify-end items-center my-2">
-                <span
-                  onClick={() => setSamllDeviceNavbar(false)}
-                  className="flex justify-center items-center rounded-full h-10 w-10 hover:bg-gray-400 transition-colors duration-300"
-                >
-                  <X />
-                </span>
-              </div>
-              <div className="flex flex-col space-y-4">
-                {topNavbarItem.map((item) => (
-                  <NavLink
-                    key={item.name}
-                    to={item.href}
-                    className={({ isActive }) =>
-                      `${
-                        isActive ? "bg-gray-400 dark:bg-gray-700" : ""
-                      } p-2 rounded-sm hover:bg-gray-400 dark:hover:bg-gray-700`
-                    }
-                  >
-                    {item.name}
-                  </NavLink>
-                ))}
-              </div>
-            </motion.div>
-          )}
+          {samllDeviceNavbar && <SmallDeviceSideNav setSamllDeviceNavbar={setSamllDeviceNavbar} />}
 
           <h2 className="text-xl font-bold text-gray-800 dark:text-gray-200">
             <span className="bg-gray-800 dark:bg-gray-200 text-gray-200 dark:text-gray-800 px-2 font-bold rounded">
