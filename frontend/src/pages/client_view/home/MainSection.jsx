@@ -103,7 +103,7 @@ const MainSection = () => {
         <h2 className="text-xl md:text-2xl font-semibold mb-6">
           Letest Projects
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
           <ProjectCard />
           <ProjectCard />
           <ProjectCard />
@@ -131,7 +131,7 @@ const MainSection = () => {
 
       <section className="my-10 shadow-2xl">
         <div className="flex flex-col shadow p-6 my-10">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 px-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 px-10">
             {companyWorks.map((item) => (
               <div
                 key={item.title}
@@ -171,7 +171,7 @@ const MainSection = () => {
             <h2 className="text-center text-xl md:text-2xl lg:text-3xl font-semibold my-6">
               Technologies We Use
             </h2>
-            <div className=" w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10">
+            <div className=" w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
               {outTechnologies.map((item) => (
                 <div
                   key={item.title}

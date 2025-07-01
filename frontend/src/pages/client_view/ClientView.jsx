@@ -61,7 +61,7 @@ const ClientView = () => {
           <img
             src={Logo}
             alt=""
-            className="w-[250px] h-[250px] sm:w-[450px] sm:h-[450px] lg:w-[500px] lg:h-[500px] rounded-full shadow-2xl shadow-gray-500"
+            className="w-[250px] h-[250px] sm:w-[350px] sm:h-[350px] md:w-[420px] md:h-[420px] lg:w-[500px] lg:h-[500px] rounded-full shadow-2xl shadow-gray-500"
           />
         </div>
       </motion.section>
