@@ -10,7 +10,6 @@ import ClientLayout from "./components/client_view/ClientLayout.jsx";
 import ClientView from "./pages/client_view/ClientView.jsx";
 import AboutUser from "./pages/client_view/about/AboutUser.jsx";
 import ProjectUser from "./pages/client_view/project/ProjectUser.jsx";
-import ExperienceUser from "./pages/client_view/experience/ExperienceUser.jsx";
 import TestimonialsUser from "./pages/client_view/testimonials/TestimonialsUser.jsx";
 import ServiceUser from "./pages/client_view/service/ServiceUser.jsx";
 import BlogUser from "./pages/client_view/blog/BlogUser.jsx";
@@ -34,6 +33,7 @@ import Setting from "./pages/admin_view/Setting.jsx";
 import Logout from "./pages/admin_view/Logout.jsx";
 import Loader from "./pages/common_view/Loader.jsx";
 import LoginPage from "./pages/auth/LoginPage.jsx";
+import ContactUser from "./pages/client_view/contact/ContactUser.jsx";
 
 const App = () => {
   const state = useSelector((state) => state.auth);
@@ -84,7 +84,7 @@ const App = () => {
           <Route path="home" element={<ClientView />} />
           <Route path="about-me" element={<AboutUser />} />
           <Route path="projects" element={<ProjectUser />} />
-          <Route path="experiences" element={<ExperienceUser />} />
+          <Route path="contact" element={<ContactUser />} />
           <Route path="testimonials" element={<TestimonialsUser />} />
           <Route path="services" element={<ServiceUser />} />
           <Route path="blogs" element={<BlogUser />} />
