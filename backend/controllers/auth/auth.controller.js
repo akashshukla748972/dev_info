@@ -148,7 +148,7 @@ export const handleLogoutUser = async (req, res, next) => {
     res.clearCookie("token", {
       httpOnly: true,
       secure: true,
-      sameSite: "strict",
+      sameSite: "none",
     });
 
     res.status(200).json({

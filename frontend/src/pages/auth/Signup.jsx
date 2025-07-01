@@ -31,7 +31,7 @@ const Signup = () => {
     });
   };
   return (
-    <main className="p-6 shadow shadow-gray-500 w-1/3 rounded-xl">
+    <main className="p-6 shadow shadow-gray-500 w-[90%] sm:w-[80%] md:w-[70%] lg:w-1/3 rounded-xl">
       <div className="flex flex-col justify-center items-center mb-4">
         {/* <User size={32} /> */}
         <h2 className="text-center text-xl font-semibold">Admin Register</h2>
