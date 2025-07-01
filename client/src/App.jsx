@@ -33,6 +33,7 @@ import Blog from "./pages/admin_view/Blog.jsx";
 import Message from "./pages/admin_view/Message.jsx";
 import Setting from "./pages/admin_view/Setting.jsx";
 import Logout from "./pages/admin_view/Logout.jsx";
+import Loader from "./pages/common_view/Loader.jsx";
 
 const App = () => {
   const state = useSelector((state) => state.auth);
