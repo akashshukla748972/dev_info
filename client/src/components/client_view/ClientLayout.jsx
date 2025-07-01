@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { Outlet } from "react-router-dom";
 import TopNavbar from "./top_navbar";
-import FooterUser from "./common/Footer";
+import FooterUser from "./common/FooterUser";
 
 const ClientLayout = () => {
   const scrollContainerRef = useRef(null);
