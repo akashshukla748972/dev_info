@@ -119,7 +119,7 @@ const TopNavbar = ({ scrollContainerRef }) => {
                 className="flex items-center space-x-2 cursor-pointer py-2 px-3"
               >
                 {user.name ? (
-                  <p className="font-semibold">{user.name.slice(0, 12)}</p>
+                  <p className="font-semibold">{user.name.slice(0, 5)}</p>
                 ) : (
                   <p className="w-8 h-8 flex justify-center items-center bg-orange-500 rounded-full">
                     {user.email.slice(0, 2).toUpperCase()}
