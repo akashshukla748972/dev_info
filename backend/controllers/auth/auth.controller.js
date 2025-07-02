@@ -1,4 +1,5 @@
 import adminModel from "../../models/admin.model.js";
+import userModel from "../../models/user.model.js";
 import CustomError from "../../utils/CustomError.js";
 import { genHash, verifyPassword } from "../../utils/genHash.js";
 import { getToken } from "../../utils/jwtToken.js";
@@ -130,7 +131,13 @@ export const handleLoginUser = async (req, res, next) => {
 export const handleCheckAuth = async (req, res, next) => {
   try {
     const user = req?.user;
-    const userData = await adminModel.findById(user.id).select("-password");
+    let userData;
+
+    if (user.role != "User" || "Client") {
+      userData = await adminModel.findById(user.id).select("-password");
+    } else {
+      userData = await userModel.findById(user.id).select("-password");
+    }
     return res.status(200).json({
       message: "Authrized user.",
       isSuccess: true,
