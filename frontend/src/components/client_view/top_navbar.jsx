@@ -3,17 +3,21 @@ import { topNavbarItem } from "../../configs/client";
 import { NavLink } from "react-router-dom";
 import { ChevronDown, Menu, Moon, Sun, X } from "lucide-react";
 import SmallDeviceSideNav from "./SmallDeviceSideNav";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AnimatePresence, motion } from "framer-motion";
+import { logoutUser } from "../../store/auth_slice/authSlice";
+import SubscribeUser from "./common/SubscribeUser";
 
 const TopNavbar = ({ scrollContainerRef }) => {
-  const { isSubscribed, user } = useSelector((state) => state.auth);
+  const { isSubscribed, user, isLoading } = useSelector((state) => state.auth);
   const [userPopup, setUserPopup] = useState(false);
   const [sticky, setSticky] = useState(false);
   const [theme, setTheme] = useState(
     localStorage.getItem("theme") ? localStorage.getItem("theme") : "dark"
   );
   const [samllDeviceNavbar, setSamllDeviceNavbar] = useState(false);
+  const [openSubscribeForm, setOpenSubscribeForm] = useState(false);
+  const dispatch = useDispatch();
 
   const element = document.documentElement;
 
@@ -50,7 +54,7 @@ const TopNavbar = ({ scrollContainerRef }) => {
 
   return (
     <div
-      className={`fixed top-0 right-0 left-0 z-50 max-w-full container mx-auto px-2 md:px-4 shadow-md bg-gray-100 dark:bg-transparent backdrop-blur-2xl`}
+      className={`fixed top-0 right-0 left-0 z-50 max-w-full container mx-auto px-2 md:px-4 shadow-md bg-transparent backdrop-blur-2xl`}
     >
       <div className="flex flex-1 items-center py-4 justify-between">
         <div className="flex items-center text-xl relative">
@@ -93,12 +97,17 @@ const TopNavbar = ({ scrollContainerRef }) => {
             <button
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
               aria-label="Toggle Theme"
-              className="w-fit h-fit"
+              className="w-fit h-fit cursor-pointer"
             >
               {theme === "dark" ? <Sun size={32} /> : <Moon size={32} />}
             </button>
             {!isSubscribed ? (
-              <button className="px-6 py-2 rounded-full border-2 border-orange-500 text-orange-500 cursor-pointer font-semibold">
+              <button
+                onClick={() => {
+                  setOpenSubscribeForm(!openSubscribeForm);
+                }}
+                className="px-6 py-2 rounded-full border-2 border-orange-500 text-orange-500 cursor-pointer font-semibold"
+              >
                 Subscribe
               </button>
             ) : (
@@ -126,7 +135,7 @@ const TopNavbar = ({ scrollContainerRef }) => {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -50 }}
                   transition={{ duration: 0.2, delay: 0.3 }}
-                  className="fixed top-20 min-h-60 right-0 sm:w-1/2 md:w-2/3 lg:w-2/12 bg-gray-100 dark:bg-gray-800 p-6"
+                  className="fixed top-20 min-h-60 right-0 w-full sm:w-1/2 md:w-2/3 lg:w-2/6 bg-gray-100 dark:bg-gray-800 p-6"
                 >
                   <div className="flex justify-end">
                     <X
@@ -146,8 +155,15 @@ const TopNavbar = ({ scrollContainerRef }) => {
                   </div>
 
                   <div className="mt-10">
-                    <button className="w-full p-2 border-2 border-red-500 rounded-md font-semibold text-red-500">
-                      Logout
+                    <button
+                      onClick={() => dispatch(logoutUser())}
+                      className="w-full p-2 border-2 border-red-500 rounded-md font-semibold text-red-500"
+                    >
+                      {isLoading ? (
+                        <div className="w-6 h-6 border-3 border-gray-300 border-r-gray-800 rounded-full animate-spin"></div>
+                      ) : (
+                        "Logout"
+                      )}
                     </button>
                   </div>
                 </motion.div>
@@ -155,6 +171,12 @@ const TopNavbar = ({ scrollContainerRef }) => {
             )}
           </div>
         </div>
+        {openSubscribeForm && (
+          <SubscribeUser
+            isLoading={isLoading}
+            setOpenSubscribeForm={setOpenSubscribeForm}
+          />
+        )}
       </div>
     </div>
   );

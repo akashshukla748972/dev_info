@@ -127,6 +127,7 @@ export const authSlice = createSlice({
           (state.isError = null),
           (state.isAuthenticated = false);
         state.user = null;
+        state.isSubscribed = false;
       })
       .addCase(logoutUser.rejected, (state, action) => {
         state.isLoading = false;
