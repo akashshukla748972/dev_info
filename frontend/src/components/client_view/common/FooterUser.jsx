@@ -115,10 +115,10 @@ const FooterUser = () => {
                   />
                   <button
                     onClick={handleSubscribe}
-                    className="min-w-32 bg-orange-500 dark:bg-orange-800 text-gray-100 font-semibold px-4 md:px-6 lg:px-10 py-2 cursor-pointer"
+                    className="min-w-32 flex justify-center bg-orange-500 dark:bg-orange-800 text-gray-100 font-semibold px-4 md:px-6 lg:px-10 py-2 cursor-pointer"
                   >
                     {isLoading ? (
-                      <div className="w-7 h-7 border-2 border-gray-300 border-r-gray-800 rounded-full animate-spin"></div>
+                      <div className="w-6 h-6 border-3 border-gray-300 border-r-gray-800 rounded-full animate-spin"></div>
                     ) : (
                       "Subscribe"
                     )}

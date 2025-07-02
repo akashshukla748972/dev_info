@@ -134,18 +134,18 @@ const TopNavbar = ({ scrollContainerRef }) => {
                       className="w-8 h-8 rounded-full bg-gray-500 p-2 text-xl hover:bg-red-500"
                     />
                   </div>
-                  <div className="flex flex-col space-y-3">
-                    <div className="">
+                  <div className="flex flex-col space-y-3 my-4 items-center">
+                    <div className="text-xl font-semibold">
                       <span className="">Name:</span>
                       <span className="">Akash Shukla</span>
                     </div>
-                    <div className="">
+                    <div className="text-sm opacity-60">
                       <span className="">Email:</span>
                       <span className="">shukla@gmail.com</span>
                     </div>
                   </div>
 
-                  <div className="mt-16">
+                  <div className="mt-10">
                     <button className="w-full p-2 border-2 border-red-500 rounded-md font-semibold text-red-500">
                       Logout
                     </button>
