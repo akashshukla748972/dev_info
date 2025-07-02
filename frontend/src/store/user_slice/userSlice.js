@@ -7,10 +7,38 @@ const initialState = {
 };
 
 export const subscribe = createAsyncThunk(
-  "/auth/subscribe",
+  "/user/subscribe",
   async (formData, { rejectWithValue }) => {
     try {
       const response = await Axios.post("/users/subscribe", formData);
+      return response.data;
+    } catch (error) {
+      const message = error.response?.data?.message || error.message;
+      console.error(message);
+      return rejectWithValue(error.response?.data);
+    }
+  }
+);
+
+export const registerClient = createAsyncThunk(
+  "/user/registerClient",
+  async (formData, { rejectWithValue }) => {
+    try {
+      const response = await Axios.post("/users/register", formData);
+      return response.data;
+    } catch (error) {
+      const message = error.response?.data?.message || error.message;
+      console.error(message);
+      return rejectWithValue(error.response?.data);
+    }
+  }
+);
+
+export const loginClient = createAsyncThunk(
+  "/user/loginClient",
+  async (formData, { rejectWithValue }) => {
+    try {
+      const response = await Axios.post("/users/login", formData);
       return response.data;
     } catch (error) {
       const message = error.response?.data?.message || error.message;
@@ -33,6 +61,26 @@ export const userSlice = createSlice({
         (state.isLoading = false), (state.isError = null);
       })
       .addCase(subscribe.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = action.payload;
+      })
+      .addCase(registerClient.pending, (state) => {
+        (state.isLoading = true), (state.isError = null);
+      })
+      .addCase(registerClient.fulfilled, (state, action) => {
+        (state.isLoading = false), (state.isError = null);
+      })
+      .addCase(registerClient.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = action.payload;
+      })
+      .addCase(loginClient.pending, (state) => {
+        (state.isLoading = true), (state.isError = null);
+      })
+      .addCase(loginClient.fulfilled, (state, action) => {
+        (state.isLoading = false), (state.isError = null);
+      })
+      .addCase(loginClient.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.payload;
       });

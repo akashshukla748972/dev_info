@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { topNavbarItem } from "../../configs/client";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { ChevronDown, Menu, Moon, Sun, X } from "lucide-react";
 import SmallDeviceSideNav from "./SmallDeviceSideNav";
 import { useDispatch, useSelector } from "react-redux";
@@ -65,12 +65,15 @@ const TopNavbar = ({ scrollContainerRef }) => {
             <SmallDeviceSideNav setSamllDeviceNavbar={setSamllDeviceNavbar} />
           )}
 
-          <h2 className="text-xl font-bold text-gray-800 dark:text-gray-200">
+          <Link
+            to={"/user/home"}
+            className="text-xl font-bold text-gray-800 dark:text-gray-200"
+          >
             <span className="bg-gray-800 dark:bg-gray-200 text-gray-200 dark:text-gray-800 px-2 font-bold rounded">
               DEV
             </span>
             INFO
-          </h2>
+          </Link>
         </div>
         <div className="flex items-center gap-x-10">
           <div className="hidden lg:flex space-x-6 font-medium">
@@ -97,7 +100,7 @@ const TopNavbar = ({ scrollContainerRef }) => {
             <button
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
               aria-label="Toggle Theme"
-              className="w-fit h-fit cursor-pointer"
+              className="w-fit h-fit cursor-pointer animate-pulse"
             >
               {theme === "dark" ? <Sun size={32} /> : <Moon size={32} />}
             </button>
@@ -116,7 +119,7 @@ const TopNavbar = ({ scrollContainerRef }) => {
                 className="flex items-center space-x-2 cursor-pointer py-2 px-3"
               >
                 {user.name ? (
-                  <p className="font-semibold">{user.name.slice(0, 10)}</p>
+                  <p className="font-semibold">{user.name.slice(0, 12)}</p>
                 ) : (
                   <p className="w-8 h-8 flex justify-center items-center bg-orange-500 rounded-full">
                     {user.email.slice(0, 2).toUpperCase()}
@@ -144,13 +147,13 @@ const TopNavbar = ({ scrollContainerRef }) => {
                     />
                   </div>
                   <div className="flex flex-col space-y-3 my-4 items-center">
-                    <div className="text-xl font-semibold">
+                    <div className="text-xl font-semibold space-x-2">
                       <span className="">Name:</span>
-                      <span className="">Akash Shukla</span>
+                      <span className="">{user?.name || "Subscriber"}</span>
                     </div>
-                    <div className="text-sm opacity-60">
+                    <div className="text-sm opacity-60 space-x-2">
                       <span className="">Email:</span>
-                      <span className="">shukla@gmail.com</span>
+                      <span className="">{user?.email}</span>
                     </div>
                   </div>
 
@@ -172,10 +175,7 @@ const TopNavbar = ({ scrollContainerRef }) => {
           </div>
         </div>
         {openSubscribeForm && (
-          <SubscribeUser
-            isLoading={isLoading}
-            setOpenSubscribeForm={setOpenSubscribeForm}
-          />
+          <SubscribeUser setOpenSubscribeForm={setOpenSubscribeForm} />
         )}
       </div>
     </div>

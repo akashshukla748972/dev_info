@@ -3,12 +3,15 @@ import { X } from "lucide-react";
 import React from "react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
-import { subscribe } from "../../../store/user_slice/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  loginClient,
+  registerClient,
+} from "../../../store/user_slice/userSlice";
 import { toast } from "react-toastify";
 import { checkAuth } from "../../../store/auth_slice/authSlice";
 
-const SubscribeUser = ({ isLoading, setOpenSubscribeForm }) => {
+const SubscribeUser = ({ setOpenSubscribeForm }) => {
   const {
     register,
     handleSubmit,
@@ -19,14 +22,16 @@ const SubscribeUser = ({ isLoading, setOpenSubscribeForm }) => {
   });
   const [loginForm, setLoginForm] = useState(false);
   const dispatch = useDispatch();
+  const { isLoading } = useSelector((state) => state.user);
 
   const handleLoginClient = (data) => {
-    dispatch(subscribe({ email: email })).then((data) => {
+    dispatch(loginClient(data)).then((data) => {
       if (data.payload?.isError) {
         toast.error(data.payload.message);
       } else {
         toast.success(data.payload?.message || "Client loged in successfully.");
         setTimeout(() => {
+          setOpenSubscribeForm(false);
           dispatch(checkAuth());
         }, 1000);
       }
@@ -34,7 +39,7 @@ const SubscribeUser = ({ isLoading, setOpenSubscribeForm }) => {
   };
 
   const handleRegisterClient = (data) => {
-    dispatch(subscribe({ email: email })).then((data) => {
+    dispatch(registerClient(data)).then((data) => {
       if (data.payload?.isError) {
         toast.error(data.payload.message);
       } else {
@@ -42,6 +47,7 @@ const SubscribeUser = ({ isLoading, setOpenSubscribeForm }) => {
           data.payload?.message || "Client registered successfully."
         );
         setTimeout(() => {
+          setOpenSubscribeForm(false);
           dispatch(checkAuth());
         }, 1000);
       }
@@ -66,7 +72,7 @@ const SubscribeUser = ({ isLoading, setOpenSubscribeForm }) => {
             </div>
             <div className="">
               {/* create client */}
-              {loginForm ? (
+              {!loginForm ? (
                 <form
                   onSubmit={handleSubmit(handleLoginClient)}
                   className="flex flex-col space-y-3 my-2"
@@ -126,8 +132,12 @@ const SubscribeUser = ({ isLoading, setOpenSubscribeForm }) => {
                     )}
                   </div>
 
-                  <button className="w-full bg-gray-600/80 p-2 rounded font-semibold cursor-pointer hover:bg-gray-600 active:scale-95 transition-transform duration-200 mt-2">
-                    Log In
+                  <button className="w-full bg-gray-600/80 p-2 rounded font-semibold cursor-pointer hover:bg-gray-600 active:scale-95 transition-transform duration-200 mt-2 flex justify-center outline-none">
+                    {isLoading ? (
+                      <div className="w-6 h-6 border-3 border-gray-300 border-r-gray-800 rounded-full animate-spin"></div>
+                    ) : (
+                      "Login"
+                    )}
                   </button>
                 </form>
               ) : (
@@ -214,8 +224,12 @@ const SubscribeUser = ({ isLoading, setOpenSubscribeForm }) => {
                     )}
                   </div>
 
-                  <button className="w-full bg-gray-600/80 p-2 rounded font-semibold cursor-pointer hover:bg-gray-600 active:scale-95 transition-transform duration-200 mt-2">
-                    Register
+                  <button className="w-full bg-gray-600/80 p-2 rounded font-semibold cursor-pointer hover:bg-gray-600 active:scale-95 transition-transform duration-200 mt-2 flex justify-center outline-none">
+                    {isLoading ? (
+                      <div className="w-6 h-6 border-3 border-gray-300 border-r-gray-800 rounded-full animate-spin"></div>
+                    ) : (
+                      "Register"
+                    )}
                   </button>
                 </form>
               )}
