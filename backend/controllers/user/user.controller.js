@@ -30,7 +30,7 @@ export const handleCreateSubscriber = async (req, res, next) => {
     res.cookie("token", token, {
       httpOnly: true,
       secure: true,
-      sameSite: "strict",
+      sameSite: "none",
       maxAge: 30 * 60 * 60 * 1000,
     });
 
@@ -91,7 +91,7 @@ export const handleCreateClient = async (req, res, next) => {
     res.cookie("token", token, {
       httpOnly: true,
       secure: true,
-      sameSite: "strict",
+      sameSite: "none",
       maxAge: 30 * 60 * 60 * 1000,
     });
 
@@ -141,7 +141,7 @@ export const handleLoginClient = async (req, res, next) => {
     res.cookie("token", token, {
       httpOnly: true,
       secure: true,
-      sameSite: "strict",
+      sameSite: "none",
       maxAge: 30 * 60 * 60 * 1000,
     });
 
