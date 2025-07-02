@@ -9,24 +9,19 @@ export const handleCreateSubscriber = async (req, res, next) => {
       return next(new CustomError("Email is required.", 400));
     }
 
-    const isExist = await userModel.findOne({ email });
-    if (isExist) {
-      return next(
-        new CustomError("Subscriber already exist, Try another email.", 409)
-      );
+    let user = await userModel.findOne({ email }).select("-password");
+    if (!user) {
+      user = await userModel.create({
+        name: name || null,
+        email,
+        isSubscribed: true,
+      });
+
+      user = await userModel.findById(user._id).select("-password");
     }
-
-    const newUser = await userModel.create({
-      name: name || null,
-      email,
-      isSubscribed: true,
-    });
-
-    const user = await userModel.findById(newUser._id).select("-password");
 
     const payLoad = {
       id: user._id,
-      name: user.name || user.email.charAt(0),
       email: user.email,
       role: user.role,
     };

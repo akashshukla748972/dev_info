@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { Axios } from "../../services/Axios";
 
 const initialState = {
   isLoading: false,
@@ -7,9 +8,9 @@ const initialState = {
 
 export const subscribe = createAsyncThunk(
   "/auth/subscribe",
-  async (_, { rejectWithValue }) => {
+  async (formData, { rejectWithValue }) => {
     try {
-      const response = await Axios.get("/users/subscribe");
+      const response = await Axios.post("/users/subscribe", formData);
       return response.data;
     } catch (error) {
       const message = error.response?.data?.message || error.message;
@@ -25,13 +26,13 @@ export const userSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(logoutUser.pending, (state) => {
+      .addCase(subscribe.pending, (state) => {
         (state.isLoading = true), (state.isError = null);
       })
-      .addCase(logoutUser.fulfilled, (state, action) => {
+      .addCase(subscribe.fulfilled, (state, action) => {
         (state.isLoading = false), (state.isError = null);
       })
-      .addCase(logoutUser.rejected, (state, action) => {
+      .addCase(subscribe.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.payload;
       });

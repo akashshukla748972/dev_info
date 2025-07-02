@@ -133,7 +133,7 @@ export const handleCheckAuth = async (req, res, next) => {
     const user = req?.user;
     let userData;
 
-    if (user.role != "User" || "Client") {
+    if (user.role != "User" && "Client") {
       userData = await adminModel.findById(user.id).select("-password");
     } else {
       userData = await userModel.findById(user.id).select("-password");

@@ -9,8 +9,30 @@ import {
   Mail,
   Twitter,
 } from "lucide-react";
+import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import { subscribe } from "../../../store/user_slice/userSlice";
+import { toast } from "react-toastify";
+import { checkAuth } from "../../../store/auth_slice/authSlice";
 
 const FooterUser = () => {
+  const [email, setEmail] = useState("");
+  const auth = useSelector((state) => state.auth);
+  const { isLoading } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
+  const handleSubscribe = () => {
+    dispatch(subscribe({ email: email })).then((data) => {
+      if (data.payload?.isError) {
+        toast.error(data.payload.message);
+      } else {
+        toast.success(data.payload?.message || "Subscribe");
+        setTimeout(() => {
+          dispatch(checkAuth());
+        }, 1000);
+      }
+    });
+  };
   return (
     <section className="p-4 md:p-6 lg:p-10 bg-gray-100 dark:bg-gray-800">
       <div className="space-y-6">
@@ -82,14 +104,31 @@ const FooterUser = () => {
               Get the latest templates and updates in your inbox
             </p>
             <div className="md:max-w-sm flex border border-orange-500 dark:border-none dark:bg-gray-700 rounded-md overflow-hidden">
-              <input
-                type="text"
-                className="w-full bg-transparent px-4 py-2 outline-none"
-                placeholder="Your Email"
-              />
-              <button className=" bg-orange-500 dark:bg-orange-800 text-gray-100 font-semibold px-4 md:px-6 lg:px-10 py-2 cursor-pointer">
-                Subscribe
-              </button>
+              {!auth.isSubscribed ? (
+                <>
+                  <input
+                    type="text"
+                    className="w-full bg-transparent px-4 py-2 outline-none"
+                    placeholder="Your Email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                  <button
+                    onClick={handleSubscribe}
+                    className="min-w-32 bg-orange-500 dark:bg-orange-800 text-gray-100 font-semibold px-4 md:px-6 lg:px-10 py-2 cursor-pointer"
+                  >
+                    {isLoading ? (
+                      <div className="w-7 h-7 border-2 border-gray-300 border-r-gray-800 rounded-full animate-spin"></div>
+                    ) : (
+                      "Subscribe"
+                    )}
+                  </button>
+                </>
+              ) : (
+                <p className="text-center w-full py-2 bg-orange-500">
+                  Your are our subscriber!
+                </p>
+              )}
             </div>
           </div>
         </div>

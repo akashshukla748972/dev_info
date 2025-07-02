@@ -17,7 +17,6 @@ const LoginPage = () => {
   const dispatch = useDispatch();
   const handleLoginUser = (data) => {
     dispatch(loginUser(data)).then((data) => {
-      console.log(data);
       if (data.payload?.isError) {
         toast.error(data.payload.message);
       } else {
