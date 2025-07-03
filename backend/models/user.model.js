@@ -24,6 +24,27 @@ const userSchema = new Schema(
       enum: ["User", "Client"],
       default: "User",
     },
+    isValidEmail: {
+      type: Boolean,
+      default: false,
+    },
+    otp: {
+      type: String,
+      default: null,
+    },
+    otpExpiry: {
+      type: Date,
+      default: "",
+    },
+    status: {
+      type: String,
+      enum: ["Active", "Inactive", "Suspended"],
+      default: "Inactive",
+    },
+    lastLogin: {
+      type: Date,
+      default: "",
+    },
   },
   { timestamps: true }
 );

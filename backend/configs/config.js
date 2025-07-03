@@ -9,6 +9,8 @@ const global_variable = {
   cloud_name: process.env.CLOUD_NAME,
   cloud_api_key: process.env.CLOUD_API_KEY,
   cloud_api_secret: process.env.CLOUD_SECRET_KEY,
+  smtp_email: process.env.SMTP_EMAIL,
+  smtp_pass: process.env.SMTP_PASS,
 };
 
 export default global_variable;

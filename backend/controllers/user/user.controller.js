@@ -1,7 +1,9 @@
 import userModel from "../../models/user.model.js";
 import CustomError from "../../utils/CustomError.js";
 import { genHash, verifyPassword } from "../../utils/genHash.js";
+import generatedOtp from "../../utils/genOtp.js";
 import { getToken } from "../../utils/jwtToken.js";
+import { sendEmail } from "../../utils/mailer.js";
 
 export const handleCreateSubscriber = async (req, res, next) => {
   try {
@@ -72,12 +74,17 @@ export const handleCreateClient = async (req, res, next) => {
         password: hashPassword,
         role: "Client",
         isSubscribed: true,
+        status: "Active",
+        lastLogin: new Date(),
       });
-    } else if (user && !user.password) {
-      user.password = hashPassword;
-      (user.name = name), (user.role = "Client");
-
-      await user.save();
+    } else if (user && !user.password && !user.role == "Client") {
+      (user.password = hashPassword),
+        (user.name = name),
+        (user.role = "Client");
+      user.status = "Active";
+      (user.lastLogin = new Date()), await user.save();
+    } else {
+      return next(new CustomError("User alredy exist, Please login.", 409));
     }
 
     user = await userModel.findById(user._id).select("-password");
@@ -132,6 +139,10 @@ export const handleLoginClient = async (req, res, next) => {
       return next(new CustomError("Email or Password is wrong."));
     }
 
+    user.status = "Active";
+    user.lastLogin = new Date();
+    await user.save();
+
     const payLoad = {
       id: user._id,
       email: user.email,
@@ -153,6 +164,78 @@ export const handleLoginClient = async (req, res, next) => {
     });
   } catch (error) {
     console.error("Error while created client:", error);
+    return next(new CustomError("Internal server error", 500));
+  }
+};
+
+export const handleGenMailOtp = async (req, res, next) => {
+  try {
+    const user = req?.user;
+    const getUserData = await userModel.findById(user.id).select("-password");
+
+    if (getUserData.isValidEmail) {
+      return next(new CustomError("Email alredy verified.", 409));
+    }
+
+    const otp = generatedOtp();
+    const expireTime = new Date() + 10 * 60 * 1000;
+
+    await userModel.findByIdAndUpdate(getUserData._id, {
+      otp: otp,
+      otpExpiry: new Date(expireTime).toISOString(),
+    });
+
+    const response = await sendEmail(
+      getUserData.email,
+      "OTP Verification",
+      otp
+    );
+
+    if (!response?.isSuccess) {
+      return next(response.isError);
+    }
+
+    return res.status(200).json({
+      response,
+    });
+  } catch (error) {
+    console.error("Error while genrating OTP:", error);
+    return next(new CustomError("Internal server error", 500));
+  }
+};
+
+export const handleVerifyMailOtp = async (req, res, next) => {
+  try {
+    const user = req?.user;
+    const { otp } = req.body;
+
+    if (!otp) return next(new CustomError("OTP is required.", 400));
+
+    const getUserData = await userModel.findById(user.id).select("-password");
+
+    const currentTime = new Date().toISOString();
+
+    if (getUserData.otpExpiry < currentTime) {
+      return next(new CustomError("OTP is expired.", 400));
+    }
+
+    if (otp !== getUserData.otp) {
+      return next(new CustomError("Invalid OTP.", 400));
+    }
+
+    await userModel.findByIdAndUpdate(getUserData._id, {
+      otp: "",
+      otpExpiry: "",
+      isValidEmail: true,
+    });
+
+    return res.status(200).json({
+      message: "Email varification completed.",
+      isSuccess: true,
+      isError: false,
+    });
+  } catch (error) {
+    console.error("Error while verifing OTP:", error);
     return next(new CustomError("Internal server error", 500));
   }
 };
