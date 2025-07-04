@@ -4,6 +4,7 @@ import { Axios } from "../../services/Axios";
 const initialState = {
   isLoading: false,
   isError: null,
+  isOpenForm: false,
 };
 
 export const subscribe = createAsyncThunk(
@@ -34,6 +35,20 @@ export const registerClient = createAsyncThunk(
   }
 );
 
+export const verifyOtp = createAsyncThunk(
+  "/user/verifyOtp",
+  async (formData, { rejectWithValue }) => {
+    try {
+      const response = await Axios.post("/users/verify-otp", formData);
+      return response.data;
+    } catch (error) {
+      const message = error.response?.data?.message || error.message;
+      console.error(message);
+      return rejectWithValue(error.response?.data);
+    }
+  }
+);
+
 export const loginClient = createAsyncThunk(
   "/user/loginClient",
   async (formData, { rejectWithValue }) => {
@@ -51,7 +66,14 @@ export const loginClient = createAsyncThunk(
 export const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {},
+  reducers: {
+    showForm: (state) => {
+      state.isOpenForm = true;
+    },
+    hideForm: (state) => {
+      state.isOpenForm = false;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(subscribe.pending, (state) => {
@@ -83,8 +105,19 @@ export const userSlice = createSlice({
       .addCase(loginClient.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = action.payload;
+      })
+      .addCase(verifyOtp.pending, (state) => {
+        (state.isLoading = true), (state.isError = null);
+      })
+      .addCase(verifyOtp.fulfilled, (state, action) => {
+        (state.isLoading = false), (state.isError = null);
+      })
+      .addCase(verifyOtp.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = action.payload;
       });
   },
 });
 
+export const { showForm, hideForm } = userSlice.actions;
 export default userSlice.reducer;

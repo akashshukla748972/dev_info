@@ -1,14 +1,14 @@
 import jwt from "jsonwebtoken";
 import global_variable from "../configs/config.js";
 
-export const getToken = async (payLoad) => {
+export const getToken = async (payLoad, exp) => {
   try {
     if (!payLoad) {
       console.log("Payload required");
       return null;
     }
     const token = await jwt.sign(payLoad, global_variable.jwt_secret, {
-      expiresIn: "7d",
+      expiresIn: exp,
     });
     return token;
   } catch (error) {

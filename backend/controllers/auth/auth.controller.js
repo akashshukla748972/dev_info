@@ -152,6 +152,10 @@ export const handleCheckAuth = async (req, res, next) => {
 
 export const handleLogoutUser = async (req, res, next) => {
   try {
+    const user = req?.user;
+    await userModel.findByIdAndUpdate(user.id, {
+      status: "inactive",
+    });
     res.clearCookie("token", {
       httpOnly: true,
       secure: true,

@@ -1,17 +1,21 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
-import React from "react";
+import React, { use } from "react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  hideForm,
   loginClient,
   registerClient,
+  showForm,
+  verifyOtp,
 } from "../../../store/user_slice/userSlice";
 import { toast } from "react-toastify";
 import { checkAuth } from "../../../store/auth_slice/authSlice";
+import { useNavigate } from "react-router-dom";
 
-const SubscribeUser = ({ setOpenSubscribeForm }) => {
+const SubscribeUser = ({ isOpenForm }) => {
   const {
     register,
     handleSubmit,
@@ -20,18 +24,49 @@ const SubscribeUser = ({ setOpenSubscribeForm }) => {
   } = useForm({
     mode: "onChange",
   });
-  const [loginForm, setLoginForm] = useState(false);
+  const [loginForm, setLoginForm] = useState(true);
+  const [optForm, setOtpForm] = useState(false);
+  const [otpEmail, setOtpEmail] = useState("shuklaakash357@gmail.com");
+  const [otp, setOtp] = useState("");
+
   const dispatch = useDispatch();
   const { isLoading } = useSelector((state) => state.user);
+  const navigate = useNavigate();
 
   const handleLoginClient = (data) => {
     dispatch(loginClient(data)).then((data) => {
       if (data.payload?.isError) {
         toast.error(data.payload.message);
       } else {
-        toast.success(data.payload?.message || "Client loged in successfully.");
+        toast.success(data.payload?.message || "OTP has sent on email.");
+        reset();
+        setOtpEmail(data.payload?.email);
+        setLoginForm(false);
+        setOtpForm(true);
+      }
+    });
+  };
+
+  const handleChangeOtp = (e) => {
+    const otpDigit = e.target.value;
+    if (!isNaN(otpDigit)) {
+      setOtp(otpDigit);
+    }
+  };
+
+  const handleVerifyOtp = (data) => {
+    dispatch(verifyOtp(data)).then((data) => {
+      if (data.payload?.isError) {
+        toast.error(data.payload.message);
+      } else {
+        toast.success(data.payload?.message || "User loggedin successfully.");
+        reset();
+        setOtpEmail("");
+        setOtp("");
+        dispatch(hideForm());
+        setLoginForm(true);
+        setOtpForm(false);
         setTimeout(() => {
-          setOpenSubscribeForm(false);
           dispatch(checkAuth());
         }, 1000);
       }
@@ -46,10 +81,8 @@ const SubscribeUser = ({ setOpenSubscribeForm }) => {
         toast.success(
           data.payload?.message || "Client registered successfully."
         );
-        setTimeout(() => {
-          setOpenSubscribeForm(false);
-          dispatch(checkAuth());
-        }, 1000);
+        reset();
+        setLoginForm(true);
       }
     });
   };
@@ -66,13 +99,18 @@ const SubscribeUser = ({ setOpenSubscribeForm }) => {
           >
             <div className="flex justify-end relative">
               <X
-                onClick={() => setOpenSubscribeForm(false)}
+                onClick={() => {
+                  setOtpForm(false);
+                  setLoginForm(true);
+                  dispatch(hideForm());
+                  navigate("/user/home");
+                }}
                 className="absolute -top-4 -right-4 w-8 h-8 rounded-full bg-gray-500/60 p-2 text-xl hover:bg-red-500"
               />
             </div>
             <div className="">
               {/* create client */}
-              {!loginForm ? (
+              {loginForm ? (
                 <form
                   onSubmit={handleSubmit(handleLoginClient)}
                   className="flex flex-col space-y-3 my-2"
@@ -137,6 +175,63 @@ const SubscribeUser = ({ setOpenSubscribeForm }) => {
                       <div className="w-6 h-6 border-3 border-gray-300 border-r-gray-800 rounded-full animate-spin"></div>
                     ) : (
                       "Login"
+                    )}
+                  </button>
+                </form>
+              ) : optForm ? (
+                <form
+                  onSubmit={handleSubmit(handleVerifyOtp)}
+                  className="flex flex-col space-y-3 my-2"
+                >
+                  <h2 className="text-xl font-semibold text-center underline">
+                    Verify Your OTP
+                  </h2>
+                  <div className="flex flex-col space-y-2">
+                    <input
+                      {...register("email")}
+                      type="text"
+                      className="hidden"
+                      id="email"
+                      hidden
+                      defaultValue={otpEmail}
+                      placeholder="Enter email"
+                    />
+                  </div>
+
+                  <div className="flex flex-col space-y-2">
+                    <label htmlFor="otp">
+                      OTP <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      {...register("otp", {
+                        required: "OTP is required",
+                        minLength: {
+                          value: 6,
+                          message: "Please enter 6 digit OTP",
+                        },
+                      })}
+                      type="text"
+                      className={`border ${
+                        errors.otp
+                          ? "border-red-500"
+                          : "border-gray-700 dark:border-gray-200"
+                      } outline-none p-2 rounded`}
+                      id="password"
+                      maxLength="6"
+                      onChange={handleChangeOtp}
+                      value={otp}
+                      placeholder="Enter OTP"
+                    />
+                    {errors.otp && (
+                      <span className="text-red-500">{errors.otp.message}</span>
+                    )}
+                  </div>
+
+                  <button className="w-full bg-gray-600/80 p-2 rounded font-semibold cursor-pointer hover:bg-gray-600 active:scale-95 transition-transform duration-200 mt-2 flex justify-center outline-none">
+                    {isLoading ? (
+                      <div className="w-6 h-6 border-3 border-gray-300 border-r-gray-800 rounded-full animate-spin"></div>
+                    ) : (
+                      "Verify OTP"
                     )}
                   </button>
                 </form>
@@ -248,6 +343,8 @@ const SubscribeUser = ({ setOpenSubscribeForm }) => {
                     Register
                   </span>
                 </button>
+              ) : optForm ? (
+                ""
               ) : (
                 <button
                   onClick={() => {

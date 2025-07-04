@@ -35,7 +35,6 @@ export const checkAuth = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await Axios.get("/auth/check-auth");
-      console.log(response);
       return response.data;
     } catch (error) {
       const message = error.response?.data?.message || error.message;

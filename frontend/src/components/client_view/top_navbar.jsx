@@ -7,9 +7,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { AnimatePresence, motion } from "framer-motion";
 import { logoutUser } from "../../store/auth_slice/authSlice";
 import SubscribeUser from "./common/SubscribeUser";
+import { showForm } from "../../store/user_slice/userSlice";
 
 const TopNavbar = ({ scrollContainerRef }) => {
   const { isSubscribed, user, isLoading } = useSelector((state) => state.auth);
+  const { isOpenForm } = useSelector((state) => state.user);
   const [userPopup, setUserPopup] = useState(false);
   const [sticky, setSticky] = useState(false);
   const [theme, setTheme] = useState(
@@ -107,7 +109,7 @@ const TopNavbar = ({ scrollContainerRef }) => {
             {!isSubscribed ? (
               <button
                 onClick={() => {
-                  setOpenSubscribeForm(!openSubscribeForm);
+                  dispatch(showForm());
                 }}
                 className="px-6 py-2 rounded-full border-2 border-orange-500 text-orange-500 cursor-pointer font-semibold"
               >
@@ -174,9 +176,7 @@ const TopNavbar = ({ scrollContainerRef }) => {
             )}
           </div>
         </div>
-        {openSubscribeForm && (
-          <SubscribeUser setOpenSubscribeForm={setOpenSubscribeForm} />
-        )}
+        {isOpenForm && <SubscribeUser isOpenForm={isOpenForm} />}
       </div>
     </div>
   );

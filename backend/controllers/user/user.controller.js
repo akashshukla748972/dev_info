@@ -33,7 +33,7 @@ export const handleCreateSubscriber = async (req, res, next) => {
       httpOnly: true,
       secure: true,
       sameSite: "none",
-      maxAge: 30 * 60 * 60 * 1000,
+      maxAge: 10 * 60 * 60 * 1000,
     });
 
     return res.status(201).json({
@@ -87,24 +87,8 @@ export const handleCreateClient = async (req, res, next) => {
       return next(new CustomError("User alredy exist, Please login.", 409));
     }
 
-    user = await userModel.findById(user._id).select("-password");
-
-    const payLoad = {
-      id: user._id,
-      email: user.email,
-      role: user.role,
-    };
-    const token = await getToken(payLoad);
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: true,
-      sameSite: "none",
-      maxAge: 30 * 60 * 60 * 1000,
-    });
-
     return res.status(201).json({
-      message: "Successfully subscribed.",
-      token,
+      message: "Registration completed, now you can login",
       isSuccess: true,
       isError: false,
     });
@@ -139,26 +123,23 @@ export const handleLoginClient = async (req, res, next) => {
       return next(new CustomError("Email or Password is wrong."));
     }
 
-    user.status = "Active";
-    user.lastLogin = new Date();
-    await user.save();
+    const otp = generatedOtp();
+    const expireTime = new Date() + 10 * 60 * 1000;
 
-    const payLoad = {
-      id: user._id,
-      email: user.email,
-      role: user.role,
-    };
-    const token = await getToken(payLoad);
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: true,
-      sameSite: "none",
-      maxAge: 30 * 60 * 60 * 1000,
+    await userModel.findByIdAndUpdate(user._id, {
+      otp: otp,
+      otpExpiry: new Date(expireTime).toISOString(),
     });
 
+    const response = await sendEmail(user.email, "OTP Verification", otp);
+
+    if (!response?.isSuccess) {
+      return next(response.isError);
+    }
+
     return res.status(201).json({
-      message: "Successfully Loged in.",
-      token,
+      message: "Otp has sent on your email",
+      email,
       isSuccess: true,
       isError: false,
     });
@@ -168,50 +149,14 @@ export const handleLoginClient = async (req, res, next) => {
   }
 };
 
-export const handleGenMailOtp = async (req, res, next) => {
+export const handleVerifyOtp = async (req, res, next) => {
   try {
-    const user = req?.user;
-    const getUserData = await userModel.findById(user.id).select("-password");
-
-    if (getUserData.isValidEmail) {
-      return next(new CustomError("Email alredy verified.", 409));
-    }
-
-    const otp = generatedOtp();
-    const expireTime = new Date() + 10 * 60 * 1000;
-
-    await userModel.findByIdAndUpdate(getUserData._id, {
-      otp: otp,
-      otpExpiry: new Date(expireTime).toISOString(),
-    });
-
-    const response = await sendEmail(
-      getUserData.email,
-      "OTP Verification",
-      otp
-    );
-
-    if (!response?.isSuccess) {
-      return next(response.isError);
-    }
-
-    return res.status(200).json({
-      response,
-    });
-  } catch (error) {
-    console.error("Error while genrating OTP:", error);
-    return next(new CustomError("Internal server error", 500));
-  }
-};
-
-export const handleVerifyMailOtp = async (req, res, next) => {
-  try {
-    const user = req?.user;
-    const { otp } = req.body;
+    const { otp, email } = req.body;
 
     if (!otp) return next(new CustomError("OTP is required.", 400));
+    if (!email) return next(new CustomError("Email is required.", 400));
 
-    const getUserData = await userModel.findById(user.id).select("-password");
+    const getUserData = await userModel.findOne({ email }).select("-password");
 
     const currentTime = new Date().toISOString();
 
@@ -223,14 +168,36 @@ export const handleVerifyMailOtp = async (req, res, next) => {
       return next(new CustomError("Invalid OTP.", 400));
     }
 
-    await userModel.findByIdAndUpdate(getUserData._id, {
-      otp: "",
-      otpExpiry: "",
-      isValidEmail: true,
+    const user = await userModel
+      .findByIdAndUpdate(
+        getUserData._id,
+        {
+          otp: "",
+          otpExpiry: "",
+          isValidEmail: true,
+          status: "Active",
+          lastLogin: new Date(),
+        },
+        { new: true }
+      )
+      .select("-password");
+
+    const payLoad = {
+      id: user._id,
+      email: user.email,
+      role: user.role,
+    };
+    const token = await getToken(payLoad, "10d");
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+      maxAge: 10 * 60 * 60 * 1000,
     });
 
     return res.status(200).json({
-      message: "Email varification completed.",
+      message: "User logged in successfully.",
+      token,
       isSuccess: true,
       isError: false,
     });
