@@ -107,13 +107,13 @@ export const handleLoginUser = async (req, res, next) => {
       email: user.email,
       role: user.role,
     };
-    const token = await getToken(payLoad);
+    const token = await getToken(payLoad, "7d");
 
     res.cookie("token", token, {
       httpOnly: true,
       secure: true,
       sameSite: "none",
-      maxAge: 24 * 60 * 60 * 1000,
+      maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
     return res.status(200).json({
@@ -130,6 +130,7 @@ export const handleLoginUser = async (req, res, next) => {
 
 export const handleCheckAuth = async (req, res, next) => {
   try {
+    console.log("hello");
     const user = req?.user;
     let userData;
 

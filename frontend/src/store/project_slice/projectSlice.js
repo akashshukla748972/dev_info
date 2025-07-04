@@ -20,7 +20,6 @@ export const getAllProject = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await Axios.get("/projects/all-project", FormData);
-      console.log(response);
       return response.data;
     } catch (error) {
       const message = error?.response?.data?.message || error.message;

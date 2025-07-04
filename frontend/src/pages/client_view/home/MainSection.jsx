@@ -12,88 +12,90 @@ import {
 import { IoAmericanFootballOutline, IoLogoReact } from "react-icons/io5";
 import { GrNode } from "react-icons/gr";
 import { SiNativescript } from "react-icons/si";
+import { useSelector } from "react-redux";
 
+const companyWorks = [
+  {
+    Icon: Smile,
+    title: "UI/UX Design",
+    para: "User-centered interfaces with intuitive navigation and visually appealing designs that improve conversion rates and user satisfaction.",
+    color: "#9333EA",
+  },
+  {
+    Icon: LaptopMinimal,
+    title: "Website Development",
+    para: "Responsive, fast-loading websites with modern technology stack. Custom solutions that scale with your business needs.",
+    color: "#2563EB",
+  },
+  {
+    Icon: Smartphone,
+    title: "App Development",
+    para: "Native and cross-platform mobile applications that deliver seamless user experiences across iOS and Android devices.",
+    color: "#16A34A",
+  },
+];
+
+const devProcess = [
+  "Discovery",
+  "Planning",
+  "Design",
+  "Development",
+  "Testing",
+  "Launch",
+  "Support",
+];
+
+const outTechnologies = [
+  {
+    Icon: IoLogoReact,
+    title: "React.js",
+    para: "Frontend Development",
+    color: "#2563EB",
+  },
+  {
+    Icon: GrNode,
+    title: "Node.js",
+    para: "Backend Development",
+    color: "#16A34A",
+  },
+  {
+    Icon: SiNativescript,
+    title: "React Native",
+    para: "Mobile App Development",
+    color: "#9333EA",
+  },
+  {
+    Icon: IoAmericanFootballOutline,
+    title: "Expo",
+    para: "Mobile App Development",
+    color: "#CA8A04",
+  },
+];
+
+const ourServices = [
+  {
+    Ic: Table2,
+    title: "Website Development",
+    para: "Custom websites with responsive design, SEO optimization, and intuitive user interfaces.",
+  },
+  {
+    Ic: GraduationCap,
+    title: "UI/UX Design",
+    para: "User-centered design with modern aesthetics for higher engagement and conversion rates.",
+  },
+  {
+    Ic: Smartphone,
+    title: "Mobile App Development",
+    para: "Native and cross-platform apps for iOS and Android with seamless performance.",
+  },
+  {
+    Ic: User,
+    title: "Custom Development",
+    para: "Tailored solutions for your specific business needs, from enterprise applications to specialized tools.",
+  },
+];
 const MainSection = () => {
-  const companyWorks = [
-    {
-      Icon: Smile,
-      title: "UI/UX Design",
-      para: "User-centered interfaces with intuitive navigation and visually appealing designs that improve conversion rates and user satisfaction.",
-      color: "#9333EA",
-    },
-    {
-      Icon: LaptopMinimal,
-      title: "Website Development",
-      para: "Responsive, fast-loading websites with modern technology stack. Custom solutions that scale with your business needs.",
-      color: "#2563EB",
-    },
-    {
-      Icon: Smartphone,
-      title: "App Development",
-      para: "Native and cross-platform mobile applications that deliver seamless user experiences across iOS and Android devices.",
-      color: "#16A34A",
-    },
-  ];
-
-  const devProcess = [
-    "Discovery",
-    "Planning",
-    "Design",
-    "Development",
-    "Testing",
-    "Launch",
-    "Support",
-  ];
-
-  const outTechnologies = [
-    {
-      Icon: IoLogoReact,
-      title: "React.js",
-      para: "Frontend Development",
-      color: "#2563EB",
-    },
-    {
-      Icon: GrNode,
-      title: "Node.js",
-      para: "Backend Development",
-      color: "#16A34A",
-    },
-    {
-      Icon: SiNativescript,
-      title: "React Native",
-      para: "Mobile App Development",
-      color: "#9333EA",
-    },
-    {
-      Icon: IoAmericanFootballOutline,
-      title: "Expo",
-      para: "Mobile App Development",
-      color: "#CA8A04",
-    },
-  ];
-
-  const ourServices = [
-    {
-      Ic: Table2,
-      title: "Website Development",
-      para: "Custom websites with responsive design, SEO optimization, and intuitive user interfaces.",
-    },
-    {
-      Ic: GraduationCap,
-      title: "UI/UX Design",
-      para: "User-centered design with modern aesthetics for higher engagement and conversion rates.",
-    },
-    {
-      Ic: Smartphone,
-      title: "Mobile App Development",
-      para: "Native and cross-platform apps for iOS and Android with seamless performance.",
-    },
-    {
-      Ic: User,
-      title: "Custom Development",
-      para: "Tailored solutions for your specific business needs, from enterprise applications to specialized tools.",
-    },
-  ];
+  const { projects, isLoading } = useSelector((state) => state.projects);
   return (
     <div className="">
       <SearchComponent />
@@ -104,10 +106,13 @@ const MainSection = () => {
           Letest Projects
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
-          <ProjectCard />
-          <ProjectCard />
-          <ProjectCard />
-          <ProjectCard />
+          {projects ? (
+            projects?.map((project) => (
+              <ProjectCard key={project?.title} project={project} />
+            ))
+          ) : (
+            <div className="">Project not found</div>
+          )}
         </div>
       </section>
 
@@ -125,7 +130,7 @@ const MainSection = () => {
         </div>
 
         <div className="">
-          <PosterGallery />
+          <PosterGallery projects={projects} />
         </div>
       </section>
 

@@ -4,6 +4,7 @@ import TopNavbar from "./top_navbar";
 import FooterUser from "./common/FooterUser";
 import { useDispatch, useSelector } from "react-redux";
 import { showForm } from "../../store/user_slice/userSlice";
+import { getAllProject } from "../../store/project_slice/projectSlice";
 
 const ClientLayout = () => {
   const scrollContainerRef = useRef(null);
@@ -11,7 +12,14 @@ const ClientLayout = () => {
   const { isAuthenticated } = useSelector((state) => state.auth);
   const { pathname } = useLocation();
 
-  const protectedRoutes = ["projects", "contact", "services", "blogs", "testimonials", "about-me"];
+  const protectedRoutes = [
+    "projects",
+    "contact",
+    "services",
+    "blogs",
+    "testimonials",
+    "about-me",
+  ];
 
   useEffect(() => {
     const shouldProtect = protectedRoutes.some((route) =>
@@ -21,6 +29,7 @@ const ClientLayout = () => {
     if (shouldProtect && !isAuthenticated) {
       dispatch(showForm());
     }
+    dispatch(getAllProject());
   }, [pathname, dispatch]);
 
   return (

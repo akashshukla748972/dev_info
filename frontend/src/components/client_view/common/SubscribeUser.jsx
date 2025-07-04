@@ -89,13 +89,13 @@ const SubscribeUser = ({ isOpenForm }) => {
   return (
     <>
       <AnimatePresence>
-        <div className="h-screen inset-0 top-20 z-50 fixed bg-white/80 dark:bg-gray-900/80 backdrop-blur-2xl">
+        <div className="h-screen inset-0 z-50 fixed bg-white/80 dark:bg-gray-900/80 backdrop-blur-2xl">
           <motion.div
             initial={{ opacity: 0, y: -50 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -50 }}
             transition={{ duration: 0.2, delay: 0.3 }}
-            className=" absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] w-full sm:w-1/2 md:w-2/3 lg:w-2/6 bg-gray-200/90 dark:bg-gray-800/90 p-6 rounded"
+            className=" absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] w-[95%] sm:w-1/2 md:w-2/3 lg:w-2/6 bg-gray-200/90 dark:bg-gray-800/90 p-6 rounded-md"
           >
             <div className="flex justify-end relative">
               <X

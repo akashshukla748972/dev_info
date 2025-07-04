@@ -3,18 +3,16 @@ import { IoStar, IoStarHalf } from "react-icons/io5";
 import React from "react";
 import { Link } from "react-router-dom";
 
-const ProjectCard = () => {
+const ProjectCard = ({ project }) => {
   return (
     <div className="max-w-xl bg-gray-100 dark:bg-gray-800 rounded-xl overflow-hidden">
       <div className="w-full">
-        <img
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUPIfiGgUML8G3ZqsNLHfaCnZK3I5g4tJabQ&s"
-          alt=""
-          className="w-full"
-        />
+        <img src={project?.poster.url} alt="" className="w-full" />
       </div>
       <div className="flex flex-col space-y-3 px-2 md:px-4 my-6">
-        <h2 className="text-xl md:text-2xl font-semibold">Project Name</h2>
+        <h2 className="text-xl md:text-2xl font-semibold">
+          {project?.title.slice(0, 15)}...
+        </h2>
         <div className="flex flex-wrap space-x-4 text-[12px]">
           <span className="px-4 py-1 rounded bg-gray-200 dark:bg-gray-700">
             HTML

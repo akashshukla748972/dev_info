@@ -7,7 +7,16 @@ const SearchComponent = () => {
     <div className="flex flex-col items-center justify-center">
       <div className="flex items-center justify-center">
         <div className="flex flex-wrap items-center justify-around space-x-3 space-y-3 lg:space-x-6 lg:space-y-6">
-          <NavLink className="px-4 lg:px-10 py-2 lg:py-3 rounded-3xl w-fit bg-gray-100 dark:bg-gray-800 font-semibold">
+          <NavLink
+            to={"/user/projects"}
+            className={(isActive) =>
+              `${
+                isActive
+                  ? "bg-gray-300 dark:bg-gray-600"
+                  : "bg-gray-100 dark:bg-gray-800"
+              } px-4 lg:px-10 py-2 lg:py-3 rounded-3xl w-fit  font-semibold`
+            }
+          >
             All
           </NavLink>
           <NavLink className="px-4 lg:px-10 py-2 lg:py-3 rounded-3xl w-fit bg-gray-100 dark:bg-gray-800 font-semibold">
